@@ -1,0 +1,437 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:p="clr-namespace:Lithnet.Umare.Presentation"
+                    xmlns:c="clr-namespace:Lithnet.Common.Presentation;assembly=Lithnet.Common.Presentation">
+
+    <Style TargetType="{x:Type TreeViewItem}"
+           BasedOn="{StaticResource {x:Type TreeViewItem}}">
+        <Setter Property="IsSelected"
+                Value="{Binding IsSelected, Mode=TwoWay}" />
+        <Setter Property="IsExpanded"
+                Value="{Binding IsExpanded, Mode=TwoWay}" />
+    </Style>
+
+    <HierarchicalDataTemplate DataType="{x:Type p:XmlConfigFileViewModel}"
+                              ItemsSource="{Binding Path=ChildNodes}">
+        <p:TreeViewItemControl />
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate DataType="{x:Type p:FlowRuleAliasCollectionViewModel}"
+                              ItemsSource="{Binding Path=.}">
+        <StackPanel>
+            <StackPanel Orientation="Horizontal"
+                        Margin="2">
+                <StackPanel.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Add Alias..."
+                                  Command="{Binding Commands.AddAlias}" />
+                    </ContextMenu>
+                </StackPanel.ContextMenu>
+                <Image Source="{Binding DisplayIcon}"
+                       Width="16"
+                       Height="16"
+                       SnapsToDevicePixels="True" />
+                <TextBlock Text="{Binding DisplayName}"
+                           Margin="5,0" />
+            </StackPanel>
+
+            <Control Template="{StaticResource RedUnderlineError}"
+                     Visibility="{Binding HasErrors, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+        </StackPanel>
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate DataType="{x:Type p:MAOperationsViewModel}"
+                              ItemsSource="{Binding Path=.}">
+        <StackPanel>
+            <StackPanel Orientation="Horizontal"
+                        Margin="2">
+                <StackPanel.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Add Management Agent..."
+                                  Command="{Binding Commands.AddManagementAgent}" />
+                    </ContextMenu>
+                </StackPanel.ContextMenu>
+                <Image Source="{Binding DisplayIcon}"
+                       Width="16"
+                       Height="16"
+                       SnapsToDevicePixels="True" />
+                <TextBlock Text="{Binding DisplayName}"
+                           Margin="5,0" />
+            </StackPanel>
+
+            <Control Template="{StaticResource RedUnderlineError}"
+                     Visibility="{Binding HasErrors, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+        </StackPanel>
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate DataType="{x:Type p:MAOperationViewModel}">
+        <HierarchicalDataTemplate.ItemsSource>
+            <MultiBinding>
+                <MultiBinding.Converter>
+                    <c:CompositeCollectionConverter />
+                </MultiBinding.Converter>
+                <Binding Path="ChildNodes" />
+            </MultiBinding>
+        </HierarchicalDataTemplate.ItemsSource>
+        <p:TreeViewItemControl>
+            <p:TreeViewItemControl.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Delete..."
+                              Command="{Binding Commands.DeleteManagementAgent}" />
+                    <Separator />
+                    <MenuItem Header="Cut"
+                              Command="{Binding Commands.Cut}" />
+                    <MenuItem Header="Copy"
+                              Command="{Binding Commands.Copy}" />
+                </ContextMenu>
+            </p:TreeViewItemControl.ContextMenu>
+        </p:TreeViewItemControl>
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate DataType="{x:Type p:ActionGroupCollectionViewModel}"
+                              ItemsSource="{Binding Path=.}">
+        <StackPanel>
+            <StackPanel Orientation="Horizontal"
+                        Margin="2">
+                <StackPanel.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Add action group..."
+                                  Command="{Binding Commands.AddActionGroup}" />
+                        <Separator />
+                        <MenuItem Header="Paste"
+                                  Command="{Binding Commands.Paste}" />
+                    </ContextMenu>
+                </StackPanel.ContextMenu>
+                <Image Source="{Binding DisplayIcon}"
+                       Width="16"
+                       Height="16"
+                       SnapsToDevicePixels="True" />
+                <TextBlock Text="{Binding DisplayName}"
+                           Margin="5,0" />
+            </StackPanel>
+
+            <Control Template="{StaticResource RedUnderlineError}"
+                     Visibility="{Binding HasErrors, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+        </StackPanel>
+    </HierarchicalDataTemplate>
+
+    <!--<HierarchicalDataTemplate DataType="{x:Type p:ActionsViewModel}"
+                              ItemsSource="{Binding Path=.}">
+        <StackPanel>
+            <StackPanel Orientation="Horizontal"
+                        Margin="2">
+                <StackPanel.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Add action group..."
+                                  Command="{Binding Commands.AddActionGroup}" />
+                        <Separator />
+                        <MenuItem Header="Paste"
+                                  Command="{Binding Commands.Paste}" />
+                    </ContextMenu>
+                </StackPanel.ContextMenu>
+                <Image Source="{Binding DisplayIcon}"
+                       Width="16"
+                       Height="16"
+                       SnapsToDevicePixels="True" />
+                <TextBlock Text="{Binding DisplayName}"
+                           Margin="5,0" />
+            </StackPanel>
+
+            <Control Template="{StaticResource RedUnderlineError}"
+                     Visibility="{Binding HasErrors, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+        </StackPanel>
+    </HierarchicalDataTemplate>-->
+
+    <HierarchicalDataTemplate DataType="{x:Type p:ImportActionGroupViewModel}"
+                              >
+        <HierarchicalDataTemplate.ItemsSource>
+            <MultiBinding>
+                <MultiBinding.Converter>
+                    <c:CompositeCollectionConverter />
+                </MultiBinding.Converter>
+                <Binding Path="RuleGroup" />
+                <Binding Path="Actions" />
+            </MultiBinding>
+        </HierarchicalDataTemplate.ItemsSource>
+        <StackPanel>
+            <StackPanel Orientation="Horizontal"
+                        Margin="2">
+                <StackPanel.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Add conditions"
+                                  Command="{Binding Commands.AddExecutionConditions}" />
+
+                        <MenuItem Header="Remove conditions"
+                                  Command="{Binding Commands.RemoveExecutionConditions}" />
+                        <Separator />
+                        <MenuItem Header="Delete..."
+                                  Command="{Binding Commands.DeleteAction}" />
+                        <Separator />
+                        <MenuItem Header="Add Import Mapping..."
+                                  Command="{Binding Commands.AddImportMappingAction}" />
+                        <MenuItem Header="Add Decline Mapping..."
+                                  Command="{Binding Commands.AddDeclineMappingAction}" />
+                        <MenuItem Header="Add Pass-through..."
+                                  Command="{Binding Commands.AddPassThroughAction}" />
+                        <Separator />
+                        <MenuItem Header="Cut"
+                                  Command="{Binding Commands.Cut}" />
+                        <MenuItem Header="Copy"
+                                  Command="{Binding Commands.Copy}" />
+                        <MenuItem Header="Paste"
+                                  Command="{Binding Commands.Paste}" />
+                    </ContextMenu>
+                </StackPanel.ContextMenu>
+                <Image Source="{Binding DisplayIcon}"
+                       Width="16"
+                       Height="16"
+                       SnapsToDevicePixels="True" />
+                <TextBlock Text="{Binding DisplayName}"
+                           Margin="5,0" />
+            </StackPanel>
+
+            <Control Template="{StaticResource RedUnderlineError}"
+                     Visibility="{Binding HasErrors, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+        </StackPanel>
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate DataType="{x:Type p:ExportActionGroupViewModel}">
+        <HierarchicalDataTemplate.ItemsSource>
+            <MultiBinding>
+                <MultiBinding.Converter>
+                    <c:CompositeCollectionConverter />
+                </MultiBinding.Converter>
+                <Binding Path="RuleGroup" />
+                <Binding Path="Actions" />
+            </MultiBinding>
+        </HierarchicalDataTemplate.ItemsSource>
+        <StackPanel>
+            <StackPanel Orientation="Horizontal"
+                        Margin="2">
+                <StackPanel.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Add conditions"
+                                  Command="{Binding Commands.AddExecutionConditions}" />
+
+                        <MenuItem Header="Remove conditions"
+                                  Command="{Binding Commands.RemoveExecutionConditions}" />
+                        <Separator />
+                        <MenuItem Header="Delete..."
+                                  Command="{Binding Commands.DeleteAction}" />
+                        <Separator />
+                        <MenuItem Header="Add Export Mapping..."
+                                  Command="{Binding Commands.AddExportMappingAction}" />
+                        <MenuItem Header="Add Decline Mapping..."
+                                  Command="{Binding Commands.AddDeclineMappingAction}" />
+                        <MenuItem Header="Add Pass-through..."
+                                  Command="{Binding Commands.AddPassThroughAction}" />
+                        <Separator />
+                        <MenuItem Header="Cut"
+                                  Command="{Binding Commands.Cut}" />
+                        <MenuItem Header="Copy"
+                                  Command="{Binding Commands.Copy}" />
+                        <MenuItem Header="Paste"
+                                  Command="{Binding Commands.Paste}" />
+                    </ContextMenu>
+                </StackPanel.ContextMenu>
+                <Image Source="{Binding DisplayIcon}"
+                       Width="16"
+                       Height="16"
+                       SnapsToDevicePixels="True" />
+                <TextBlock Text="{Binding DisplayName}"
+                           Margin="5,0" />
+            </StackPanel>
+
+            <Control Template="{StaticResource RedUnderlineError}"
+                     Visibility="{Binding HasErrors, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+        </StackPanel>
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate DataType="{x:Type p:JoinMappingActionGroupViewModel}">
+        <HierarchicalDataTemplate.ItemsSource>
+            <MultiBinding>
+                <MultiBinding.Converter>
+                    <c:CompositeCollectionConverter />
+                </MultiBinding.Converter>
+                <Binding Path="RuleGroup" />
+                <Binding Path="Actions" />
+            </MultiBinding>
+        </HierarchicalDataTemplate.ItemsSource>
+        <StackPanel>
+            <StackPanel Orientation="Horizontal"
+                        Margin="2">
+                <StackPanel.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Add conditions"
+                                  Command="{Binding Commands.AddExecutionConditions}" />
+
+                        <MenuItem Header="Remove conditions"
+                                  Command="{Binding Commands.RemoveExecutionConditions}" />
+                        <Separator />
+                        <MenuItem Header="Delete..."
+                                  Command="{Binding Commands.DeleteAction}" />
+                        <Separator />
+                        <MenuItem Header="Add Join Mapping..."
+                                  Command="{Binding Commands.AddJoinMappingAction}" />
+                        <MenuItem Header="Add Decline Mapping..."
+                                  Command="{Binding Commands.AddDeclineMappingAction}" />
+                        <MenuItem Header="Add Pass-through..."
+                                  Command="{Binding Commands.AddPassThroughAction}" />
+                        <Separator />
+                        <MenuItem Header="Cut"
+                                  Command="{Binding Commands.Cut}" />
+                        <MenuItem Header="Copy"
+                                  Command="{Binding Commands.Copy}" />
+                        <MenuItem Header="Paste"
+                                  Command="{Binding Commands.Paste}" />
+                    </ContextMenu>
+                </StackPanel.ContextMenu>
+                <Image Source="{Binding DisplayIcon}"
+                       Width="16"
+                       Height="16"
+                       SnapsToDevicePixels="True" />
+                <TextBlock Text="{Binding DisplayName}"
+                           Margin="5,0" />
+            </StackPanel>
+
+            <Control Template="{StaticResource RedUnderlineError}"
+                     Visibility="{Binding HasErrors, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+        </StackPanel>
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate DataType="{x:Type p:FlowRuleAliasViewModel}">
+        <HierarchicalDataTemplate.ItemsSource>
+            <MultiBinding>
+                <MultiBinding.Converter>
+                    <c:CompositeCollectionConverter />
+                </MultiBinding.Converter>
+                <Binding Path="RuleGroup" />
+            </MultiBinding>
+        </HierarchicalDataTemplate.ItemsSource>
+        <p:TreeViewItemControl>
+            <p:TreeViewItemControl.ContextMenu>
+                <ContextMenu>
+
+                    <MenuItem Header="Add flow conditions..."
+                              Command="{Binding Commands.AddConditions}" />
+                    <MenuItem Header="Remove flow conditions..."
+                              Command="{Binding Commands.RemoveConditions}" />
+                    <Separator />
+
+                    <MenuItem Header="Delete..."
+                              Command="{Binding Commands.DeleteAlias}" />
+                    <Separator />
+                    <MenuItem Header="Cut"
+                              Command="{Binding Commands.Cut}" />
+                    <MenuItem Header="Copy"
+                              Command="{Binding Commands.Copy}" />
+                </ContextMenu>
+            </p:TreeViewItemControl.ContextMenu>
+        </p:TreeViewItemControl>
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate DataType="{x:Type p:RuleGroupViewModel}">
+        <HierarchicalDataTemplate.ItemsSource>
+            <MultiBinding>
+                <MultiBinding.Converter>
+                    <c:CompositeCollectionConverter />
+                </MultiBinding.Converter>
+                <Binding Path="Rules" />
+            </MultiBinding>
+        </HierarchicalDataTemplate.ItemsSource>
+
+        <p:TreeViewItemControl>
+            <p:TreeViewItemControl.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Add">
+
+                        <MenuItem Header="Connector count rule"
+                                  Command="{Binding Commands.AddConnectorCountRule}" />
+                        <MenuItem Header="Connector space object attribute presence rule"
+                                  Command="{Binding Commands.AddCSEntryAttributePresenceRule}" />
+                        <MenuItem Header="Metaverse object attribute presence rule"
+                                  Command="{Binding Commands.AddMVEntryAttributePresenceRule}" />
+                        <MenuItem Header="Attribute value comparison rule"
+                                  Command="{Binding Commands.AddValueComparisonRule}" />
+                        <Separator />
+
+                        <MenuItem Header="Group"
+                                  Command="{Binding Commands.AddRuleGroup}" />
+                    </MenuItem>
+
+                    <MenuItem Header="Delete"
+                              Command="{Binding Commands.DeleteRuleGroup}" />
+
+                    <Separator />
+                    <MenuItem Header="Cut"
+                              Command="{Binding Commands.Cut}" />
+                    <MenuItem Header="Copy"
+                              Command="{Binding Commands.Copy}" />
+                    <MenuItem Header="Paste"
+                              Command="{Binding Commands.Paste}" />
+
+                </ContextMenu>
+            </p:TreeViewItemControl.ContextMenu>
+        </p:TreeViewItemControl>
+
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate DataType="{x:Type p:RuleViewModel}">
+        <p:TreeViewItemControl>
+            <p:TreeViewItemControl.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Delete..."
+                              Command="{Binding Commands.DeleteRule}" />
+                    <Separator />
+                    <MenuItem Header="Cut"
+                              Command="{Binding Commands.Cut}" />
+                    <MenuItem Header="Copy"
+                              Command="{Binding Commands.Copy}" />
+                    <MenuItem Header="Paste"
+                              Command="{Binding Commands.Paste}" />
+                </ContextMenu>
+            </p:TreeViewItemControl.ContextMenu>
+        </p:TreeViewItemControl>
+    </HierarchicalDataTemplate>
+
+    <HierarchicalDataTemplate DataType="{x:Type p:ActionViewModel}">
+        <HierarchicalDataTemplate.ItemsSource>
+            <MultiBinding>
+                <MultiBinding.Converter>
+                    <c:CompositeCollectionConverter />
+                </MultiBinding.Converter>
+                <Binding Path="RuleGroup" />
+            </MultiBinding>
+        </HierarchicalDataTemplate.ItemsSource>
+        <p:TreeViewItemControl>
+            <p:TreeViewItemControl.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Add conditions"
+                              Command="{Binding Commands.AddExecutionConditions}" />
+
+                    <MenuItem Header="Remove conditions"
+                              Command="{Binding Commands.RemoveExecutionConditions}" />
+                    <Separator />
+
+                    <MenuItem Header="Delete..."
+                              Command="{Binding Commands.DeleteAction}" />
+                    <Separator />
+                    <MenuItem Header="Cut"
+                              Command="{Binding Commands.Cut}" />
+                    <MenuItem Header="Copy"
+                              Command="{Binding Commands.Copy}" />
+                    <MenuItem Header="Paste"
+                              Command="{Binding Commands.Paste}" />
+                </ContextMenu>
+            </p:TreeViewItemControl.ContextMenu>
+        </p:TreeViewItemControl>
+    </HierarchicalDataTemplate>
+
+</ResourceDictionary>

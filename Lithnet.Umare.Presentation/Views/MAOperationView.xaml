@@ -1,0 +1,27 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:p="clr-namespace:Lithnet.Umare.Presentation"
+                    xmlns:core="clr-namespace:Lithnet.Common.Presentation;assembly=Lithnet.Common.Presentation">
+
+    <DataTemplate  DataType="{x:Type p:MAOperationViewModel}">
+        <StackPanel>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Label Content="MA Name"
+                       Grid.Row="0"
+                       Grid.Column="0" />
+                <TextBox Text="{Binding Path=MAName, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}"
+                         Grid.Row="0"
+                         Grid.Column="1" />
+            </Grid>
+        </StackPanel>
+    </DataTemplate>
+    
+</ResourceDictionary>

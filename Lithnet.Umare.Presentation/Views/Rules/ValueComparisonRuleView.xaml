@@ -1,0 +1,114 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:p="clr-namespace:Lithnet.Umare.Presentation"
+                    xmlns:c="clr-namespace:Lithnet.MetadirectoryServices;assembly=Lithnet.MetadirectoryServices"
+                    xmlns:u="clr-namespace:Lithnet.Umare;assembly=Lithnet.UniversalMARE"
+                    xmlns:core="clr-namespace:Lithnet.Common.Presentation;assembly=Lithnet.Common.Presentation">
+
+    <DataTemplate  DataType="{x:Type p:ValueComparisonRuleViewModel}">
+        <StackPanel>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Label Content="First comparison target"
+                       Grid.Row="0"
+                       Grid.Column="0"
+                       Margin="2" />
+                <ComboBox ItemsSource="{Binding Source={core:EnumExtension {x:Type u:ComparisonTarget}}}"
+                          SelectedValue="{Binding Path=LeftTarget, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}"
+                          SelectedValuePath="Value"
+                          Grid.Row="0"
+                          Grid.Column="1"
+                          Margin="2" />
+
+                <Label Content="Attribute name or constant"
+                       Grid.Row="1"
+                       Grid.Column="0" />
+                <TextBox Text="{Binding Path=LeftValue, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}"
+                         Grid.Row="1"
+                         Grid.Column="1" />
+
+                <Label Content="Transforms to apply before comparison"
+                       Grid.Row="2"
+                       Grid.Column="0" />
+                <TextBox Text="{Binding Path=LeftTransformString, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}"
+                         Grid.Row="2"
+                         Grid.Column="1" />
+
+                <Label Content="Comparison Operator"
+                       Grid.Row="3"
+                       Grid.Column="0"
+                       Margin="2" />
+                <ComboBox ItemsSource="{Binding Source={core:EnumExtension {x:Type c:ValueOperator}}}"
+                          SelectedValue="{Binding Path=ValueOperator, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}"
+                          SelectedValuePath="Value"
+                          Grid.Row="3"
+                          Grid.Column="1"
+                          Margin="2" />
+
+                <Label Content="Second comparison target"
+                       Grid.Row="4"
+                       Grid.Column="0"
+                       Margin="2" />
+                <ComboBox ItemsSource="{Binding Source={core:EnumExtension {x:Type u:ComparisonTarget}}}"
+                          SelectedValue="{Binding Path=RightTarget, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}"
+                          SelectedValuePath="Value"
+                          Grid.Row="4"
+                          Grid.Column="1"
+                          Margin="2" />
+
+                <Label Content="Attribute name or constant"
+                       Grid.Row="5"
+                       Grid.Column="0" />
+                <TextBox Text="{Binding Path=RightValue, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}"
+                         Grid.Row="5"
+                         Grid.Column="1" />
+
+                <Label Content="Transforms to apply before comparison"
+                       Grid.Row="6"
+                       Grid.Column="0" />
+                <TextBox Text="{Binding Path=RightTransformString, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}"
+                         Grid.Row="6"
+                         Grid.Column="1" />
+
+                <Label Content="Compare values as"
+                       Grid.Row="7"
+                       Grid.Column="0"
+                       Margin="2" />
+                <ComboBox ItemsSource="{Binding Source={core:EnumExtension {x:Type c:ExtendedAttributeType}}}"
+                          SelectedValue="{Binding Path=CompareAs, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}"
+                          SelectedValuePath="Value"
+                          Grid.Row="7"
+                          Grid.Column="1"
+                          Margin="2" />
+
+                <Label Content="Multivalue Operator"
+                       Grid.Row="8"
+                       Grid.Column="0"
+                       Margin="2" />
+                <ComboBox ItemsSource="{Binding Source={core:EnumExtension {x:Type u:GroupOperator}}}"
+                          SelectedValue="{Binding Path=GroupOperator, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}"
+                          SelectedValuePath="Value"
+                          Grid.Row="8"
+                          Grid.Column="1"
+                          Margin="2" />
+              
+            </Grid>
+        </StackPanel>
+    </DataTemplate>
+    
+</ResourceDictionary>

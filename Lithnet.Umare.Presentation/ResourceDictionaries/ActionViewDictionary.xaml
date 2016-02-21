@@ -1,0 +1,16 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Umare.Presentation;component/Views/Actions/DeclineMappingActionView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Umare.Presentation;component/Views/Actions/ExtensionPassThroughActionView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Umare.Presentation;component/Views/Actions/ImportMappingActionView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Umare.Presentation;component/Views/Actions/ExportMappingActionView.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Lithnet.Umare.Presentation;component/Views/Actions/JoinMappingActionView.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </ResourceDictionary.MergedDictionaries>
+   
+</ResourceDictionary>
