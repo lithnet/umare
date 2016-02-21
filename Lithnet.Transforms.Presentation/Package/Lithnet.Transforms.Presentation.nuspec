@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Lithnet.Transforms.Presentation</id>
+    <version>$version$</version>
+    <title>Lithnet Transform Engine Presentation Library</title>
+    <authors>ryan@lithiumblue.com</authors>
+    <licenseUrl>https://umare.codeplex.com/license</licenseUrl>
+    <projectUrl>https://umare.codeplex.com</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>The Lithnet Transform engine provides data transformation services to other Lithnet IdM tools</description>
+    <tags>Lithnet</tags>
+    <frameworkAssemblies/>
+  </metadata>
+  <files/>
+</package>
