@@ -41,6 +41,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Lithnet.Common.ObjectModel, Version=1.0.5777.18973, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lithnet.Common.ObjectModel.1.0.5777.18973\lib\net40\Lithnet.Common.ObjectModel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Lithnet.Logging, Version=1.0.5774.20685, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lithnet.Logging.1.0.5774.20685\lib\net40\Lithnet.Logging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Lithnet.MetadirectoryServices, Version=1.0.5895.21369, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lithnet.MetadirectoryServices.1.0.5895.21369\lib\net40\Lithnet.MetadirectoryServices.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
@@ -88,9 +100,17 @@
       <Project>{e5b53764-629f-4ed6-be7e-b87dbf869582}</Project>
       <Name>Lithnet.Transforms.Presentation</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Lithnet.Transforms\Lithnet.Transforms.csproj">
+      <Project>{3eeacb2d-e292-4dce-a476-1be0f4897e19}</Project>
+      <Name>Lithnet.Transforms</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Lithnet.Umare.RulesExtension\Lithnet.Umare.RulesExtension.csproj">
       <Project>{9278f96a-6e8c-4d7d-a82a-d0a9ffc1f58c}</Project>
       <Name>Lithnet.Umare.RulesExtension</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Lithnet.Umare\Lithnet.Umare.csproj">
+      <Project>{83d5a7ef-4d0d-4445-a85d-61f34fe66cba}</Project>
+      <Name>Lithnet.Umare</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

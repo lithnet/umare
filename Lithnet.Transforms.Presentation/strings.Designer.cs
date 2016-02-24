@@ -144,6 +144,15 @@ namespace Lithnet.Transforms.Presentation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This transform allows custom C# code to be loaded to perform transformation of values.
+        /// </summary>
+        internal static string CSharpScriptTransformDescription {
+            get {
+                return ResourceManager.GetString("CSharpScriptTransformDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This transform allows for conversion of dates between different formats, and optionally add or subtract time from the incoming date. The transform supports dates in .NET ticks, the FIM Service date format, or any custom date format supported by .NET date format strings.
         /// </summary>
         internal static string DateConverterTransformDescription {

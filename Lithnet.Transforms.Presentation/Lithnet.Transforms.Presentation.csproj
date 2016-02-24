@@ -94,6 +94,7 @@
     <Compile Include="ViewModels\EncodeStringTransformViewModel.cs" />
     <Compile Include="ViewModels\NumberCalculationTransform.cs" />
     <Compile Include="ViewModels\ConditionalStringFlowTransformViewModel.cs" />
+    <Compile Include="ViewModels\CSharpScriptTransformViewModel.cs" />
     <Compile Include="ViewModels\PowerShellScriptTransformViewModel.cs" />
     <Compile Include="ViewModels\StringEscapeTransformViewModel.cs" />
     <Compile Include="ViewModels\StringSplitTransformViewModel.cs" />
@@ -136,6 +137,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="NewItemWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\CSharpScriptTransformView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

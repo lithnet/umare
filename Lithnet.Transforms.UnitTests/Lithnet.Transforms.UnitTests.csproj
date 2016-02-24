@@ -88,6 +88,7 @@
     <Compile Include="DateConverterTransformTest.cs" />
     <Compile Include="ADGroupTypeToStringTransformTest.cs" />
     <Compile Include="GroupStringsToADGroupTypeTransformTest.cs" />
+    <Compile Include="CSharpScriptTest.cs" />
     <Compile Include="SidToDomainTransformTest.cs" />
     <Compile Include="SidStringBiDirectionalTransformTest.cs" />
     <Compile Include="FormatStringUnitTest.cs" />

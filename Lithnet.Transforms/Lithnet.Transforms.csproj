@@ -108,6 +108,7 @@
     <Compile Include="Transforms\EncodeStringTransform.cs" />
     <Compile Include="Transforms\ConditionalStringFlowTransform.cs" />
     <Compile Include="Transforms\NumberCalcuation.cs" />
+    <Compile Include="Transforms\CSharpScriptTransform.cs" />
     <Compile Include="Transforms\PowerShellScriptTransform.cs" />
     <Compile Include="Transforms\StringEscapeTransform.cs" />
     <Compile Include="Transforms\ValueMergeTransform.cs" />

@@ -264,4 +264,7 @@ The transform supports looking up string, integer, and binary values. Binary val
   <data name="PowerShellScriptPathTransformDescription" xml:space="preserve">
     <value>The transform allows the use of a custom PowerShell script to transform values</value>
   </data>
+  <data name="CSharpScriptTransformDescription" xml:space="preserve">
+    <value>This transform allows custom C# code to be loaded to perform transformation of values</value>
+  </data>
 </root>
