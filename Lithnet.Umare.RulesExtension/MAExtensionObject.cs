@@ -9,6 +9,7 @@ using Lithnet.Transforms;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Configuration;
+using System.Configuration;
 
 namespace Lithnet.Umare
 {
@@ -27,7 +28,7 @@ namespace Lithnet.Umare
 
         void IMASynchronization.Initialize()
         {
-            string path = ConfigManager.AppConfigPath;
+            string path = MAExtensionObject.AppConfigPath;
 
             if (!System.IO.File.Exists(path))
             { 
@@ -472,5 +473,40 @@ namespace Lithnet.Umare
 
             return attributeValues;
         }
+
+        private static Configuration appConfig;
+
+        public static string AppConfigPath
+        {
+            get
+            {
+                KeyValueConfigurationElement element = MAExtensionObject.AppConfig.AppSettings.Settings["ConfigFile"];
+                if (element != null)
+                {
+                    string value = element.Value;
+                    if (!string.IsNullOrEmpty(value))
+                    {
+                        return value;
+                    }
+                }
+
+                return string.Empty;
+            }
+        }
+
+        public static Configuration AppConfig
+        {
+            get
+            {
+                if (MAExtensionObject.appConfig == null)
+                {
+                    Uri exeConfigUri = new Uri(typeof(MAExtensionObject).Assembly.CodeBase);
+                    MAExtensionObject.appConfig = ConfigurationManager.OpenExeConfiguration(exeConfigUri.LocalPath);
+                }
+
+                return MAExtensionObject.appConfig;
+            }
+        }
+
     }
 }

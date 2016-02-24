@@ -7,46 +7,11 @@ using System.Runtime.Serialization;
 using Lithnet.Common.ObjectModel;
 using Lithnet.Transforms;
 using Lithnet.MetadirectoryServices;
-using System.Configuration;
 
 namespace Lithnet.Umare
 {
     public static class ConfigManager
     {
-        private static Configuration appConfig;
-
-        public static string AppConfigPath
-        {
-            get
-            {
-                KeyValueConfigurationElement element = ConfigManager.AppConfig.AppSettings.Settings["ConfigFile"];
-                if (element != null)
-                {
-                    string value = element.Value;
-                    if (!string.IsNullOrEmpty(value))
-                    {
-                        return value;
-                    }
-                }
-
-                return string.Empty;
-            }
-        }
-
-        public static Configuration AppConfig
-        {
-            get
-            {
-                if (ConfigManager.appConfig == null)
-                {
-                    Uri exeConfigUri = new Uri(typeof(ConfigManager).Assembly.CodeBase);
-                    ConfigManager.appConfig = ConfigurationManager.OpenExeConfiguration(exeConfigUri.LocalPath);
-                }
-
-                return ConfigManager.appConfig;
-            }
-        }
-
         public static XmlConfigFile LoadXml(string filename)
         {
             UniqueIDCache.ClearIdCache();
