@@ -84,11 +84,11 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>REM D:\tools\ilmerge\ilmerge /wildcards /targetplatform:"v4,C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0" /out:$(ProjectDir)obj\$(ConfigurationName)\$(TargetFileName) /lib:"..\..\..\lib" *.dll
-REM copy /Y $(ProjectDir)obj\$(ConfigurationName)\$(TargetFileName) $(TargetPath)
-REM copy /Y $(ProjectDir)obj\$(ConfigurationName)\$(TargetName).pdb $(TargetDir)$(TargetName).pdb
+    <PostBuildEvent>D:\tools\ilmerge\ilmerge /wildcards /targetplatform:"v4,C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0" /out:$(ProjectDir)obj\$(ConfigurationName)\$(TargetFileName) /lib:"..\..\..\lib" *.dll
+copy /Y $(ProjectDir)obj\$(ConfigurationName)\$(TargetFileName) $(TargetPath)
+copy /Y $(ProjectDir)obj\$(ConfigurationName)\$(TargetName).pdb $(TargetDir)$(TargetName).pdb
 
-</PostBuildEvent>
+REM call "C:\Program Files (x86)\WiX Toolset v3.10\bin\heat.exe" file "$(TargetPath)" -dr FIMEXTENSIONS -var var.Lithnet.Umare.RulesExtension.TargetDir -cg Lithnet.Umare.RulesExtension.Binaries -ag -scom -sreg -sfrag –srd -o "$(SolutionDir)Lithnet.Umare.Installer\$(ProjectName).Binaries.wxs"</PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\packages\Fody.1.29.4\build\portable-net+sl+win+wpa+wp\Fody.targets" Condition="Exists('..\packages\Fody.1.29.4\build\portable-net+sl+win+wpa+wp\Fody.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

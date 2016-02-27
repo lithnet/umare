@@ -55,6 +55,10 @@
       <HintPath>..\packages\Lithnet.MetadirectoryServices.1.0.5895.21369\lib\net40\Lithnet.MetadirectoryServices.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Lithnet.MetadirectoryServices.Resolver, Version=1.0.5900.21466, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lithnet.MetadirectoryServices.Resolver.1.0.5900.21466\lib\net40\Lithnet.MetadirectoryServices.Resolver.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.MetadirectoryServicesEx, Version=4.1.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\Microsoft.MetadirectoryServicesEx.dll</HintPath>

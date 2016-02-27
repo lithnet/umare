@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
+  <Product Id="*"
+           Name="Lithnet Universal MA Rules Extension"
+           Language="1033"
+           Version="1.5.5901"
+           Manufacturer="Lithnet"
+           UpgradeCode="187DA848-34F5-4CA6-8AD5-C35D820ABC58">
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+    <Media Id="1" Cabinet="Cab1.cab" EmbedCab="yes" />
+    <MajorUpgrade Schedule="afterInstallInitialize"
+                DowngradeErrorMessage="A later version of [ProductName] is already installed" />
+
+    <!-- Prerequisites -->
+
+    <PropertyRef Id="WIX_IS_NETFRAMEWORK_40_OR_LATER_INSTALLED"/>
+    <Condition Message="This application requires .NET Framework 4.0. Please install the .NET Framework then run this installer again. Contact support at support@Swiftposter.com if you have further issues.">
+      <![CDATA[Installed OR WIX_IS_NETFRAMEWORK_40_OR_LATER_INSTALLED]]>
+    </Condition>
+
+    <Property Id="FIMINSTALLDIR">
+      <RegistrySearch Id="FimInstallDirFromRegistry"
+                      Root="HKLM"
+                      Key="SYSTEM\CurrentControlSet\services\FIMSynchronizationService\Parameters"
+                      Name="Path"
+                      Type="directory" />
+    </Property>
+
+    <Condition Message="This application requires Frontfront Identity Manager 2010 R2 4.1.3441 or later installed">
+      <![CDATA[Installed OR FIMINSTALLDIR]]>
+    </Condition>
+
+    <Property Id="SYNCVERSION">
+      <DirectorySearch Id="MiiserverVersion" Path="[FIMINSTALLDIR]">
+        <DirectorySearch Id="binFolder" AssignToProperty="no" Path="bin">
+          <FileSearch Name="miiserver.exe" MinVersion="4.1.3441.0"/>
+        </DirectorySearch>
+      </DirectorySearch>
+    </Property>
+    <Condition Message="This application requires Frontfront Identity Manager 2010 R2 4.1.3441 or later">
+      <![CDATA[Installed OR SYNCVERSION]]>
+    </Condition>
+
+    <!-- Features -->
+
+    <Feature Id="ProductFeature" Title="Lithnet Universal MA Rules Extension" Level="1">
+      <ComponentGroupRef Id="RulesExtension" />
+      <ComponentGroupRef Id="UmareEditor"/>
+      <ComponentRef Id="ApplicationShortcut"/>
+    </Feature>
+
+    <!-- User interface elements -->
+
+    <Property Id="WIXUI_INSTALLDIR" Value="UMAREROOT" />
+
+    <UI>
+      <UIRef Id="WixUI_InstallDir" />
+      <Publish Dialog="WelcomeDlg"
+                Control="Next"
+                Event="NewDialog"
+                Value="InstallDirDlg"
+                Order="2">1</Publish>
+      <Publish Dialog="InstallDirDlg"
+                Control="Back"
+                Event="NewDialog"
+                Value="WelcomeDlg"
+                Order="2">1</Publish>
+    </UI>
+
+    <!-- Application Shortcut -->
+
+    <DirectoryRef Id="ApplicationProgramsFolder">
+      <Component Id="ApplicationShortcut" Guid="*">
+        <Shortcut Id="ApplicationStartMenuShortcut"
+                  Name="UMARE Editor"
+                  Description="Lithnet Universal MA Rules Extension"
+                  Target="[!fil32D9F77D1208B6F04526EF609CA28CCC]"
+                  WorkingDirectory="UMAREROOT"/>
+        <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="Software\Lithnet\UMARE" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+      </Component>
+    </DirectoryRef>
+
+    <!-- Installation Paths -->
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="FIMINSTALLDIR" ComponentGuidGenerationSeed="10a8647b-1425-414e-8c4b-f1211951c549">
+        <Directory Id="FIMEXTENSIONS" Name="Extensions"/>
+      </Directory>
+      <Directory Id="ProgramFiles64Folder" >
+        <Directory Id="LITHNETROOT" Name="Lithnet">
+          <Directory Id="UMAREROOT" Name="Universal MA Rules Extension">
+          </Directory>
+        </Directory>
+      </Directory>
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ApplicationProgramsFolder" Name="Lithnet UMARE"/>
+      </Directory>
+    </Directory>
+
+    <DirectoryRef Id="UMAREROOT">
+      <Component Id="cmp22B17A6D8A562FB040F22C724DE6E1F0" Guid="*">
+        <File Id="fil56AD5AE0C9DD8DC91B012C264EA26047" KeyPath="yes" Source="$(var.Lithnet.Umare.Editor.TargetDir)\Lithnet.Common.ObjectModel.dll" />
+      </Component>
+      <Component Id="cmp6509C10ED8920984B91C9AADE414E908" Guid="*">
+        <File Id="fil2148D24A9F39CD54755BB559C69563BF" KeyPath="yes" Source="$(var.Lithnet.Umare.Editor.TargetDir)\Lithnet.Common.Presentation.dll" />
+      </Component>
+      <Component Id="cmp0D2B44AC901098EAFE08346FCFA5FAF4" Guid="*">
+        <File Id="filC4E9D0FD1F09564E9AF72B6AE08DDE99" KeyPath="yes" Source="$(var.Lithnet.Umare.Editor.TargetDir)\Lithnet.Logging.dll" />
+      </Component>
+      <Component Id="cmpD6A92DC3B388297264651764B095DD8A" Guid="*">
+        <File Id="filDEF51E712D10DB6D89E1DAD6F08DBFF6" KeyPath="yes" Source="$(var.Lithnet.Umare.Editor.TargetDir)\Lithnet.MetadirectoryServices.dll" />
+      </Component>
+      <Component Id="cmp59B549E106B5176EA0E93AD19BB2E89A" Guid="*">
+        <File Id="fil06421B2B31B3DC32321C1790AACF25E4" KeyPath="yes" Source="$(var.Lithnet.Umare.Editor.TargetDir)\Lithnet.MetadirectoryServices.Resolver.dll" />
+      </Component>
+      <Component Id="cmpDF2564BC0304E4071B25CB3167E363B1" Guid="*">
+        <File Id="filD6DBD9269C0B8E894FE4BFA362F5E15B" KeyPath="yes" Source="$(var.Lithnet.Umare.Editor.TargetDir)\Lithnet.Transforms.dll" />
+      </Component>
+      <Component Id="cmpCFD17C41B51D43D9DA4F34D48538584E" Guid="*">
+        <File Id="fil34482AD5574E172E4D70612CFFB0DD90" KeyPath="yes" Source="$(var.Lithnet.Umare.Editor.TargetDir)\Lithnet.Transforms.Presentation.dll" />
+      </Component>
+      <Component Id="cmp49E97B6CBC72E4A0BC211133FA944640" Guid="*">
+        <File Id="fil6D943C5C32D9B17A97454C926206E70B" KeyPath="yes" Source="$(var.Lithnet.Umare.Editor.TargetDir)\Lithnet.Umare.dll" />
+      </Component>
+      <Component Id="cmpE4F2563A8D34CDEAF807A0F07F53CB8E" Guid="*">
+        <File Id="fil32D9F77D1208B6F04526EF609CA28CCC" KeyPath="yes" Source="$(var.Lithnet.Umare.Editor.TargetDir)\Lithnet.Umare.Editor.exe" />
+        <ProgId Id="Lithnet.UmarexFile" Description="Lithnet Universal MA Rules Extension File">
+          <Extension Id="umarex" ContentType="application/umarex">
+            <Verb Id="open" Command="open" TargetFile="fil32D9F77D1208B6F04526EF609CA28CCC" Argument="&quot;%1&quot;"/>
+          </Extension>
+        </ProgId>
+      </Component>
+      <Component Id="cmp1BF2ECC29A733AFA95F6D730BF03C1AE" Guid="*">
+        <File Id="fil46A38352992688D8A07379F7675B30FE" KeyPath="yes" Source="$(var.Lithnet.Umare.Editor.TargetDir)\Lithnet.Umare.Editor.pdb" />
+      </Component>
+      <Component Id="cmp0E91330586982DB1FF3FB9BA492BF79D" Guid="*">
+        <File Id="fil6BA58CCF5AE08F74C5F21A24017BEE63" KeyPath="yes" Source="$(var.Lithnet.Umare.Editor.TargetDir)\Lithnet.Umare.Presentation.dll" />
+      </Component>
+      <Component Id="cmp5D62C64C8E8AD4B7E2303DA5744AA928" Guid="*">
+        <File Id="fil1D4473CD3265B0207429E410248DDAF6" KeyPath="yes" Source="$(var.Lithnet.Umare.Editor.TargetDir)\Microsoft.Expression.Interactions.dll" />
+      </Component>
+      <Component Id="cmp6A0B43FFBDEDDCA101BACE27FC35FD61" Guid="*">
+        <File Id="fil8958FBE3A5E5DD2756F3B9579E96B9CA" KeyPath="yes" Source="$(var.Lithnet.Umare.Editor.TargetDir)\System.Windows.Interactivity.dll" />
+      </Component>
+    </DirectoryRef>
+
+    <DirectoryRef Id="FIMEXTENSIONS">
+      <Component Id="cmp51EE0113B1ADDACDBC10323498DF88AC" Guid="*">
+        <File Id="filDD1489BF5457245FB92F5401D7027FDF" KeyPath="yes" Source="$(var.Lithnet.Umare.RulesExtension.TargetDir)\Lithnet.Umare.RulesExtension.dll" />
+      </Component>
+      <Component Id="cmpd0bf77ef743c4866b48837d57c67d64a" Guid="*">
+        <File Id="fil171d401f4e8f4dca9216815e51c535a0" KeyPath="yes" Source="$(var.Lithnet.Umare.RulesExtension.TargetDir)\Lithnet.Umare.RulesExtension.dll.config" />
+      </Component>
+    </DirectoryRef>
+
+    <!-- Component imports -->
+
+    <ComponentGroup Id="RulesExtension" Directory="FIMEXTENSIONS">
+      <ComponentRef Id="cmp51EE0113B1ADDACDBC10323498DF88AC" />
+      <ComponentRef Id="cmpd0bf77ef743c4866b48837d57c67d64a" />
+    </ComponentGroup>
+    <ComponentGroup Id="UmareEditor" Directory="UMAREROOT">
+      <ComponentRef Id="cmp22B17A6D8A562FB040F22C724DE6E1F0" />
+      <ComponentRef Id="cmp6509C10ED8920984B91C9AADE414E908" />
+      <ComponentRef Id="cmp0D2B44AC901098EAFE08346FCFA5FAF4" />
+      <ComponentRef Id="cmpD6A92DC3B388297264651764B095DD8A" />
+      <ComponentRef Id="cmp59B549E106B5176EA0E93AD19BB2E89A" />
+      <ComponentRef Id="cmpDF2564BC0304E4071B25CB3167E363B1" />
+      <ComponentRef Id="cmpCFD17C41B51D43D9DA4F34D48538584E" />
+      <ComponentRef Id="cmp49E97B6CBC72E4A0BC211133FA944640" />
+      <ComponentRef Id="cmpE4F2563A8D34CDEAF807A0F07F53CB8E" />
+      <ComponentRef Id="cmp1BF2ECC29A733AFA95F6D730BF03C1AE" />
+      <ComponentRef Id="cmp0E91330586982DB1FF3FB9BA492BF79D" />
+      <ComponentRef Id="cmp5D62C64C8E8AD4B7E2303DA5744AA928" />
+      <ComponentRef Id="cmp6A0B43FFBDEDDCA101BACE27FC35FD61" />
+    </ComponentGroup>
+  </Product>
+
+</Wix>

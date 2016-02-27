@@ -186,14 +186,14 @@
         {
             CSharpCodeProvider provider = new CSharpCodeProvider();
             CompilerParameters parameters = new CompilerParameters();
-            parameters.ReferencedAssemblies.Add("Lithnet.Transforms.dll");
-            parameters.ReferencedAssemblies.Add("Microsoft.MetadirectoryServicesEx.dll");
+            parameters.ReferencedAssemblies.Add(typeof(Transform).Assembly.Location);
+            parameters.ReferencedAssemblies.Add(typeof(Microsoft.MetadirectoryServices.IMASynchronization).Assembly.Location);
             parameters.ReferencedAssemblies.Add("System.dll");
             parameters.ReferencedAssemblies.Add("System.Collections.dll");
             parameters.ReferencedAssemblies.Add("System.Core.dll");
             parameters.ReferencedAssemblies.Add("System.Xml.dll");
             parameters.ReferencedAssemblies.Add("System.Runtime.Serialization.dll");
-            parameters.ReferencedAssemblies.Add("Lithnet.MetadirectoryServices.dll");
+            parameters.ReferencedAssemblies.Add(typeof(Lithnet.MetadirectoryServices.ComparisonEngine).Assembly.Location);
 
             // True - memory generation, false - external file generation
             parameters.GenerateInMemory = true;

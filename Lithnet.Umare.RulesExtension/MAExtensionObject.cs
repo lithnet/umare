@@ -9,7 +9,6 @@ using Lithnet.Transforms;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Configuration;
-using System.Configuration;
 
 namespace Lithnet.Umare
 {
@@ -31,8 +30,16 @@ namespace Lithnet.Umare
             string path = MAExtensionObject.AppConfigPath;
 
             if (!System.IO.File.Exists(path))
-            { 
-                throw new FileNotFoundException("Unable to open configuration file: " + path);
+            {
+                path = this.FindUmarex();
+
+                if (path == null)
+                {
+                    throw new FileNotFoundException(
+@"Unable to find a UMAREX configuration file. To resolve this, either
+1. Use the UMARE editor to create a file and place it in the Sync Engine extensions folder, or
+2. Modify the Lithnet.Umare.RulesExtension.dll.config file in the extensions folder to point to the appropriate path containing your umarex file");
+                }
             }
 
             this.config = ConfigManager.LoadXml(path);
@@ -508,5 +515,9 @@ namespace Lithnet.Umare
             }
         }
 
+        private string FindUmarex()
+        {
+            return Directory.EnumerateFiles(Microsoft.MetadirectoryServices.Utils.ExtensionsDirectory, "*.umarex", SearchOption.TopDirectoryOnly).FirstOrDefault();
+        }
     }
 }
