@@ -58,6 +58,11 @@
         /// <returns>The transformed value</returns>
         protected override object TransformSingleValue(object inputValue)
         {
+            if (inputValue == null)
+            {
+                return null;
+            }
+
             return this.ModifyCase(TypeConverter.ConvertData<string>(inputValue));
         }
 
