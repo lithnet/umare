@@ -70,13 +70,28 @@
         /// Executes the transformation of the target value based on the input values
         /// </summary>
         /// <param name="inputValues">The incoming values to apply to the target value</param>
-        /// <param name="targetValue">The target value to apply the transform to</param>
+        /// <param name="targetValues">The target value to apply the transform to</param>
         /// <returns>The transformed value</returns>
-        protected override object TransformMultiValuesWithLoopback(IList<object> inputValues, object targetValue)
+        protected override IList<object> TransformMultiValuesWithLoopback(IList<object> inputValues, IList<object> targetValues)
         {
             if (!TransformGlobal.HostProcessSupportsLoopbackTransforms)
             {
                 throw new NotSupportedException("The hosting process does not support loopback transforms");
+            }
+
+            object targetValue = null;
+
+            if (targetValues == null || targetValues.Count == 0)
+            {
+                targetValue = this.DefaultValue;
+            }
+            else if (targetValues.Count > 1)
+            {
+                throw new ArgumentException(string.Format("MVBooleanToBitmaskTransform {0} supports only a single input value", this.ID));
+            }
+            else
+            {
+                targetValue = targetValues.First();
             }
 
             if (targetValue == null || (targetValue is string && string.IsNullOrWhiteSpace((string)targetValue)))
@@ -94,8 +109,8 @@
                 throw new ArgumentException(
                    string.Format(
                         "The transform {0} specifies {1} flags, but {2} values were received in the input stream",
-                        this.ID, 
-                        this.Flags.Count, 
+                        this.ID,
+                        this.Flags.Count,
                         inputValues.Count));
             }
 
@@ -119,7 +134,7 @@
                 count++;
             }
 
-            return returnValue;
+            return new List<object> { returnValue };
         }
 
         /// <summary>

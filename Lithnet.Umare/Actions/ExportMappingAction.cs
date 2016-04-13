@@ -19,8 +19,8 @@ namespace Lithnet.Umare
 
             if (this.Transforms.Any(t => t.ImplementsLoopbackProcessing))
             {
-                object existingTargetValue = this.GetExistingTargetValueForExportLoopback(csentry);
-                returnValues = Transform.ExecuteTransformChainWithLoopback(this.Transforms, sourceValues, existingTargetValue);
+                IList<object> existingTargetValues = this.GetExistingTargetValuesForExportLoopback(csentry);
+                returnValues = Transform.ExecuteTransformChainWithLoopback(this.Transforms, sourceValues, existingTargetValues);
             }
             else
             {
@@ -35,20 +35,26 @@ namespace Lithnet.Umare
             Attrib attribute = csentry[this.TargetAttribute];
             this.SetDestinationAttributeValue(attribute, values);
         }
-        private object GetExistingTargetValueForExportLoopback(CSEntry csentry)
+               
+        private IList<object> GetExistingTargetValuesForExportLoopback(CSEntry csentry)
         {
             List<object> values = new List<object>();
 
             Attrib attribute = csentry[this.TargetAttribute];
 
-            if (attribute.Values.Count > 1)
+            if (attribute.IsPresent)
             {
-                throw new NotSupportedException(string.Format("Attribute {0} has more than one value which is not supported for a loopback transform", attribute.Name));
+                if (attribute.IsMultivalued)
+                {
+                    values.AddRange(this.GetMVAttributeValue(attribute));
+                }
+                else
+                {
+                    values.Add(this.GetSVAttributeValue(attribute));
+                }
             }
-            else
-            {
-                return this.GetSVAttributeValue(attribute);
-            }
+
+            return values;
         }
         private IList<object> GetSourceValuesForExport(MVEntry mventry)
         {

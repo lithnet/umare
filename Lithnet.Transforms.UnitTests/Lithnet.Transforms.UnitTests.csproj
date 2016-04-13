@@ -83,8 +83,8 @@
     <Compile Include="BitmaskToBooleanTest.cs" />
     <Compile Include="BooleanOperationTransformTests.cs" />
     <Compile Include="ByteArrayComparer.cs" />
+    <Compile Include="ConditionalStringFlowTransformTest.cs" />
     <Compile Include="MVBooleanToBitmaskTest.cs" />
-    <Compile Include="BooleanToBitmaskTest.cs" />
     <Compile Include="DateConverterTransformTest.cs" />
     <Compile Include="ADGroupTypeToStringTransformTest.cs" />
     <Compile Include="GroupStringsToADGroupTypeTransformTest.cs" />

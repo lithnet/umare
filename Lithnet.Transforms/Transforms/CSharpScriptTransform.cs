@@ -20,8 +20,6 @@
     [HandlesOwnMultivaluedInput]
     public class CSharpScriptTransform : Transform
     {
-        private string scriptText;
-
         private MethodInfo method;
 
         /// <summary>

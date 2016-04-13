@@ -78,7 +78,7 @@ namespace Lithnet.Transforms.Presentation
 
         private void ExecuteSingleValuedTransform()
         {
-            this.OutputValue =  this.model.TransformValue(TypeConverter.ConvertData(this.InputValue1, this.AttributeType)).Select(t => t.ToSmartStringOrNull()).ToNewLineSeparatedString();
+            this.OutputValue = this.model.TransformValue(TypeConverter.ConvertData(this.InputValue1, this.AttributeType)).Select(t => t.ToSmartStringOrNull()).ToNewLineSeparatedString();
         }
 
         private void ExecuteMultivaluedTransform()
@@ -112,11 +112,17 @@ namespace Lithnet.Transforms.Presentation
 
             if (this.IsMultivalueSupported)
             {
-                inputValues = new List<object>() 
-                    { 
-                        TypeConverter.ConvertData(this.InputValue1, this.AttributeType),
-                        TypeConverter.ConvertData(this.InputValue2, this.AttributeType)     
-                    };
+                inputValues = new List<object>() ;
+
+                if (!string.IsNullOrWhiteSpace(this.InputValue1))
+                {
+                    inputValues.Add(TypeConverter.ConvertData(this.InputValue1, this.AttributeType));
+                }
+
+                if (!string.IsNullOrWhiteSpace(this.InputValue2))
+                {
+                    inputValues.Add(TypeConverter.ConvertData(this.InputValue2, this.AttributeType));
+                }
 
                 targetValue = this.InputValue3;
             }
@@ -127,11 +133,11 @@ namespace Lithnet.Transforms.Presentation
             }
 
             ExtendedAttributeType returnType = this.model.PossibleReturnTypes.First();
-            object output = this.model.TransformValuesWithLoopback(
-                inputValues.Where(t => t != null).ToList(),
-                TypeConverter.ConvertData(targetValue, returnType));
+            IList<object> output = this.model.TransformValuesWithLoopback(
+                inputValues.Where(t => t != null).ToList(), new List<object>() {
+                TypeConverter.ConvertData(targetValue, returnType) });
 
-            this.OutputValue = output.ToSmartStringOrNull();
+            this.OutputValue = output.Select(t => t.ToSmartStringOrNull()).ToCommaSeparatedString();
         }
 
         private bool CanExecute()

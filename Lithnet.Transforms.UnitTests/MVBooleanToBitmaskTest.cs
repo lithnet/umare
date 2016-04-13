@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Xml;
 using Lithnet.MetadirectoryServices;
@@ -81,23 +82,21 @@ namespace Lithnet.Transforms.UnitTests
             this.ExecuteTestBitwiseTransformLoopbackInput(transform, null, new List<object>() { true }, 514);
         }
 
-        //[TestMethod()]
-        //public void BitmaskLoopbackInputTestWithNullInput()
-        //{
-        //    MVBooleanToBitmaskTransform transform = new MVBooleanToBitmaskTransform();
-        //    transform.Flags.Add(new FlagValue() { Value = 2 });
-
-        //    transform.DefaultValue = 512;
-
-        //    this.ExecuteTestBitwiseTransformLoopbackInput(transform, 512, new List<object>() { true }, 514);
-        //    this.ExecuteTestBitwiseTransformLoopbackInput(transform, 512, new List<object>() { null }, 512);
-        //    this.ExecuteTestBitwiseTransformLoopbackInput(transform, 512, new List<object>() { false }, 512);
-        //    this.ExecuteTestBitwiseTransformLoopbackInput(transform, 512, new List<object>() { true }, 514);
-        //}
-
         private void ExecuteTestBitwiseTransformLoopbackInput(MVBooleanToBitmaskTransform transform, object targetValue, IList<object> inputValues, long expectedValue)
         {
-            long outValue = (long)transform.TransformValuesWithLoopback(inputValues, targetValue);
+            IList<object> result = transform.TransformValuesWithLoopback(inputValues, new List<object>() { targetValue });
+            
+            if (result.Count == 0)
+            {
+                Assert.Fail("Not results were returned");
+            }
+            else if (result.Count > 1)
+            {
+                Assert.Fail("Too many results were returned");
+            }
+
+            long outValue = (long)result.First();
+
             Assert.AreEqual(expectedValue, outValue);
         }
     }

@@ -11,7 +11,7 @@ namespace Lithnet.Umare
     [DataContract(Name = "import-mapping-action", Namespace = "http://lithnet.local/Lithnet.IdM.UniversalMARE/v1")]
     public class ImportMappingAction : MappingAction, IImportMappingAction
     {
-        [DataMember (Name = "merge-values")]
+        [DataMember(Name = "merge-values")]
         public bool MergeValues { get; set; }
 
         public void MapAttributesForImport(string FlowRuleName, CSEntry csentry, MVEntry mventry)
@@ -31,8 +31,8 @@ namespace Lithnet.Umare
 
             if (this.Transforms.Any(t => t.ImplementsLoopbackProcessing))
             {
-                object existingTargetValue = this.GetExistingTargetValueForImportLoopback(mventry);
-                returnValues = Transform.ExecuteTransformChainWithLoopback(this.Transforms, sourceValues, existingTargetValue);
+                IList<object> existingTargetValues = this.GetExistingTargetValuesForImportLoopback(mventry);
+                returnValues = Transform.ExecuteTransformChainWithLoopback(this.Transforms, sourceValues, existingTargetValues);
             }
             else
             {
@@ -109,19 +109,25 @@ namespace Lithnet.Umare
             return values;
         }
 
-        private object GetExistingTargetValueForImportLoopback(MVEntry mventry)
+        private IList<object> GetExistingTargetValuesForImportLoopback(MVEntry mventry)
         {
             List<object> values = new List<object>();
 
             Attrib attribute = mventry[this.TargetAttribute];
-            if (attribute.Values.Count > 1)
+
+            if (attribute.IsPresent)
             {
-                throw new NotSupportedException(string.Format("Attribute {0} has more than one value which is not supported for a loopback transform", attribute.Name));
+                if (attribute.IsMultivalued)
+                {
+                    values.AddRange(this.GetMVAttributeValue(attribute));
+                }
+                else
+                {
+                    values.Add(this.GetSVAttributeValue(attribute));
+                }
             }
-            else
-            {
-                return this.GetSVAttributeValue(attribute);
-            }
+
+            return values;
         }
 
         private void SetDestinationAttributeValueForImport(MVEntry mventry, IEnumerable<object> values, bool clearTarget)

@@ -107,7 +107,7 @@ namespace Lithnet.Transforms
             this.Dispose(false);
         }
 
-        public static IList<object> ExecuteTransformChainWithLoopback(IEnumerable<Transform> transforms, IList<object> inputValues, object targetValue)
+        public static IList<object> ExecuteTransformChainWithLoopback(IEnumerable<Transform> transforms, IList<object> inputValues, IList<object> targetValue)
         {
             IList<object> transformInput = inputValues.ToList();
 
@@ -124,7 +124,7 @@ namespace Lithnet.Transforms
                         throw new InvalidOperationException("A loopback transform must be executed last in the chain");
                     }
 
-                    transformInput = new List<object>() { transform.TransformMultiValuesWithLoopback(transformInput, targetValue) };
+                    transformInput = transform.TransformMultiValuesWithLoopback(transformInput, targetValue);
                 }
                 else
                 {
@@ -252,7 +252,7 @@ namespace Lithnet.Transforms
         /// <param name="inputType">The type of data supplied as the input value</param>
         /// <param name="inputValue">The incoming value to transform</param>
         /// <returns>The transformed value</returns>
-        public object TransformValuesWithLoopback(IList<object> inputValues, object targetValue)
+        public IList<object> TransformValuesWithLoopback(IList<object> inputValues, IList<object> targetValues)
         {
             if (inputValues.Any(t => t == null))
             {
@@ -261,8 +261,8 @@ namespace Lithnet.Transforms
 
             ExtendedAttributeType inputType = TypeConverter.GetDataTypeExtended(inputValues.First());
             this.ValidateInputType(inputType);
-            object returnValue = this.TransformMultiValuesWithLoopback(inputValues, targetValue);
-            Logger.WriteLine("Transform {0}: {1} -> {2}", LogLevel.Debug, this.ID, inputValues.Select(t => t.ToSmartStringOrNull()).ToCommaSeparatedString(), returnValue.ToSmartStringOrNull());
+            IList<object> returnValue = this.TransformMultiValuesWithLoopback(inputValues, targetValues);
+            Logger.WriteLine("Transform {0}: {1} -> {2}", LogLevel.Debug, this.ID, inputValues.Select(t => t.ToSmartStringOrNull()).ToCommaSeparatedString(), returnValue.Select(t => t.ToSmartStringOrNull()).ToCommaSeparatedString());
             return returnValue;
         }
 
@@ -279,7 +279,7 @@ namespace Lithnet.Transforms
             throw new NotSupportedException("The transform reported that it supported processing multivalued input, but it does not implement the required method");
         }
 
-        protected virtual object TransformMultiValuesWithLoopback(IList<object> inputValues, object targetValue)
+        protected virtual IList<object> TransformMultiValuesWithLoopback(IList<object> inputValues, IList<object> targetValue)
         {
             throw new NotSupportedException("The transform reported that it supported processing loopback processing, but it does not implement the required method");
         }

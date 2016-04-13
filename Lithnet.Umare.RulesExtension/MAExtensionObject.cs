@@ -131,8 +131,8 @@ namespace Lithnet.Umare
 
             if (parameters.Transforms.Any(t => t.ImplementsLoopbackProcessing))
             {
-                object existingTargetValue = this.GetExistingTargetValueForImportLoopback(parameters, mventry);
-                returnValues = Transform.ExecuteTransformChainWithLoopback(parameters.Transforms, sourceValues, existingTargetValue);
+                IList<object> existingTargetValues = this.GetExistingTargetValueForImportLoopback(parameters, mventry);
+                returnValues = Transform.ExecuteTransformChainWithLoopback(parameters.Transforms, sourceValues, existingTargetValues);
             }
             else
             {
@@ -157,8 +157,8 @@ namespace Lithnet.Umare
 
             if (parameters.Transforms.Any(t => t.ImplementsLoopbackProcessing))
             {
-                object existingTargetValue = this.GetExistingTargetValueForExportLoopback(parameters, csentry);
-                returnValues = Transform.ExecuteTransformChainWithLoopback(parameters.Transforms, sourceValues, existingTargetValue);
+                IList<object> existingTargetValues = this.GetExistingTargetValueForExportLoopback(parameters, csentry);
+                returnValues = Transform.ExecuteTransformChainWithLoopback(parameters.Transforms, sourceValues, existingTargetValues);
             }
             else
             {
@@ -257,35 +257,46 @@ namespace Lithnet.Umare
             return values;
         }
 
-        private object GetExistingTargetValueForImportLoopback(FlowRuleParameters parameters, MVEntry mventry)
+        private IList<object> GetExistingTargetValueForImportLoopback(FlowRuleParameters parameters, MVEntry mventry)
         {
             List<object> values = new List<object>();
 
             Attrib attribute = mventry[parameters.TargetAttributeName];
-            if (attribute.Values.Count > 1)
+            
+            if (attribute.IsPresent)
             {
-                throw new NotSupportedException(string.Format("Attribute {0} has more than one value which is not supported for a loopback transform", attribute.Name));
+                if (attribute.IsMultivalued)
+                {
+                    values.AddRange(this.GetMVAttributeValue(attribute));
+                }
+                else
+                {
+                    values.Add(this.GetSVAttributeValue(attribute));
+                }
             }
-            else
-            {
-                return this.GetSVAttributeValue(attribute);
-            }
+
+            return values;
         }
 
-        private object GetExistingTargetValueForExportLoopback(FlowRuleParameters parameters, CSEntry csentry)
+        private IList<object> GetExistingTargetValueForExportLoopback(FlowRuleParameters parameters, CSEntry csentry)
         {
             List<object> values = new List<object>();
 
             Attrib attribute = csentry[parameters.TargetAttributeName];
 
-            if (attribute.Values.Count > 1)
+            if (attribute.IsPresent)
             {
-                throw new NotSupportedException(string.Format("Attribute {0} has more than one value which is not supported for a loopback transform", attribute.Name));
+                if (attribute.IsMultivalued)
+                {
+                    values.AddRange(this.GetMVAttributeValue(attribute));
+                }
+                else
+                {
+                    values.Add(this.GetSVAttributeValue(attribute));
+                }
             }
-            else
-            {
-                return this.GetSVAttributeValue(attribute);
-            }
+
+            return values;
         }
 
         private void SetDestinationAttributeValueForImport(FlowRuleParameters parameters, MVEntry mventry, IEnumerable<object> values, bool clearTarget)

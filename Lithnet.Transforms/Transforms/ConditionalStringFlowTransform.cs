@@ -60,27 +60,57 @@
             throw new NotSupportedException("This transform does not support simple transforms");
         }
 
-        protected override object TransformMultiValuesWithLoopback(IList<object> inputValues, object targetValue)
+        protected override IList<object> TransformMultiValuesWithLoopback(IList<object> inputValues, IList<object> targetValues)
         {
-            if (inputValues.Count > 1)
-            {
-                throw new ArgumentException("This transform only supports a single input value");
-            }
-
-            string inputValue = TypeConverter.ConvertData<string>(inputValues.First());
-
-            return this.GetReturnValue(inputValue, TypeConverter.ConvertData<string>(targetValue));
+            return this.GetReturnValue(inputValues.Select(t => TypeConverter.ConvertData<string>(t)), targetValues.Select(t => TypeConverter.ConvertData<string>(t)));
         }
 
-        private string GetReturnValue(string inputValue, string targetValue)
+        private IList<object> GetReturnValue(IEnumerable<string> inputValues, IEnumerable<string> targetValues)
         {
-            if (string.Equals(inputValue, targetValue, this.ComparisonType))
+            List<object> returnValues = new List<object>();
+            StringComparer comparer = this.GetComparer();
+
+            foreach(string inputValue in inputValues)
             {
-                return targetValue;
+                string matchedTargetValue = targetValues.FirstOrDefault(t => t.Equals(inputValue, this.ComparisonType));
+
+                if (matchedTargetValue != null)
+                {
+                    returnValues.Add(matchedTargetValue);
+                }
+                else
+                {
+                    returnValues.Add(inputValue);
+                }
             }
-            else
+
+            return returnValues.ToList<object>();
+        }
+
+        private StringComparer GetComparer()
+        {
+            switch (this.ComparisonType)
             {
-                return inputValue;
+                case StringComparison.CurrentCulture:
+                    return StringComparer.CurrentCulture;
+
+                case StringComparison.CurrentCultureIgnoreCase:
+                    return StringComparer.CurrentCultureIgnoreCase;
+
+                case StringComparison.InvariantCulture:
+                    return StringComparer.InvariantCulture;
+
+                case StringComparison.InvariantCultureIgnoreCase:
+                    return StringComparer.InvariantCultureIgnoreCase;
+
+                case StringComparison.Ordinal:
+                    return StringComparer.Ordinal;
+
+                case StringComparison.OrdinalIgnoreCase:
+                    return StringComparer.OrdinalIgnoreCase;
+                
+                default:
+                    throw new InvalidOperationException();
             }
         }
 
