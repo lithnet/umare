@@ -4,7 +4,7 @@
   <Product Id="*"
            Name="Lithnet Universal MA Rules Extension"
            Language="1033"
-           Version="1.5.5947"
+           Version="1.5.5969"
            Manufacturer="Lithnet"
            UpgradeCode="187DA848-34F5-4CA6-8AD5-C35D820ABC58">
     <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
@@ -15,7 +15,7 @@
     <!-- Prerequisites -->
 
     <PropertyRef Id="WIX_IS_NETFRAMEWORK_40_OR_LATER_INSTALLED"/>
-    <Condition Message="This application requires .NET Framework 4.0. Please install the .NET Framework then run this installer again. Contact support at support@Swiftposter.com if you have further issues.">
+    <Condition Message="This application requires .NET Framework 4.0. Please install the .NET Framework then run this installer again">
       <![CDATA[Installed OR WIX_IS_NETFRAMEWORK_40_OR_LATER_INSTALLED]]>
     </Condition>
 

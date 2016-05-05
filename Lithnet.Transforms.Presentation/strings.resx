@@ -253,7 +253,7 @@ The transform supports looking up string, integer, and binary values. Binary val
     <value>The transforms allows you to escape invalid characters from an XML string, or an LDAP DN component's attribute value</value>
   </data>
   <data name="EncodeStringTransformDescription" xml:space="preserve">
-    <value>The transform allows you to encode a value as a base-32 or base-64 string</value>
+    <value>The transform allows you to encode a binary value as a base-32 or base-64 string, or a string value as a ASCII or UTF binary value</value>
   </data>
   <data name="XPathQueryTransformDescription" xml:space="preserve">
     <value>The transform allows for the extration of values from an XML blob using an XPath expression</value>

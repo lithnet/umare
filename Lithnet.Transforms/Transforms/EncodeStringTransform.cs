@@ -29,6 +29,7 @@
             get
             {
                 yield return ExtendedAttributeType.String;
+                yield return ExtendedAttributeType.Binary;
             }
         }
 
@@ -66,7 +67,7 @@
         /// </summary>
         /// <param name="value">The incoming value to transform</param>
         /// <returns>The transformed value</returns>
-        private string EncodeValue(object value)
+        private object EncodeValue(object value)
         {
             switch (this.EncodeFormat)
             {
@@ -77,7 +78,7 @@
                     return this.EncodeBase64(value);
 
                 default:
-                    throw new InvalidOperationException("The specified encoder format is unknown");
+                    return this.GetInputBytes(value, this.EncodeFormat);
             }
         }
 
@@ -88,7 +89,7 @@
         /// <returns>The encoded value</returns>
         private string EncodeBase32(object value)
         {
-            byte[] input = this.GetInputBytes(value);
+            byte[] input = this.GetInputBytes(value, StringEncodeFormat.UTF8);
             string result = Base32Encoding.ToString(input);
 
             return result;
@@ -96,7 +97,7 @@
 
         private string EncodeBase64(object value)
         {
-            byte[] input = this.GetInputBytes(value);
+            byte[] input = this.GetInputBytes(value, StringEncodeFormat.UTF8);
             string result = Convert.ToBase64String(input);
 
             return result;
@@ -107,7 +108,7 @@
         /// </summary>
         /// <param name="input">A string, integer, or binary value</param>
         /// <returns>A byte array representing the input value</returns>
-        private byte[] GetInputBytes(object input)
+        private byte[] GetInputBytes(object input, StringEncodeFormat format)
         {
             if (input == null)
             {
@@ -127,7 +128,28 @@
                     return null;
                 }
 
-                return UTF8Encoding.UTF8.GetBytes(inputString);
+                switch (format)
+                {
+                    case StringEncodeFormat.UTF7:
+                        return Encoding.UTF7.GetBytes(inputString);
+
+                    case StringEncodeFormat.UTF8:
+                        return Encoding.UTF8.GetBytes(inputString);
+
+                    case StringEncodeFormat.UTF16:
+                        return Encoding.Unicode.GetBytes(inputString);
+
+                    case StringEncodeFormat.UTF32:
+                        return Encoding.UTF32.GetBytes(inputString);
+
+                    case StringEncodeFormat.ASCII:
+                        return Encoding.ASCII.GetBytes(inputString);
+
+                    case StringEncodeFormat.Base64:
+                    case StringEncodeFormat.Base32:
+                    default:
+                        throw new InvalidOperationException();
+                }
             }
             else if (input is long || input is int)
             {
