@@ -153,6 +153,19 @@ namespace Lithnet.Transforms.UnitTests
         }
 
         [TestMethod()]
+        public void PerformanceTest()
+        {
+            BooleanOperationTransform transform = new BooleanOperationTransform();
+            transform.ID = Guid.NewGuid().ToString();
+            transform.Operator = BitwiseOperation.Xor;
+
+            UnitTestControl.PerformanceTest(() =>
+            {
+                Assert.AreEqual(false, transform.TransformValue(new List<object>() { true, true, false }).First());
+            }, 250000);
+        }
+
+        [TestMethod()]
         public void BooleanOperation2BooleanXorNegative()
         {
             BooleanOperationTransform transform = new BooleanOperationTransform();

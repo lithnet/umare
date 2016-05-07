@@ -13,6 +13,21 @@
     [System.ComponentModel.Description("Regex find and replace")]
     public class RegexReplaceTransform : Transform
     {
+        private Regex regex;
+
+        private Regex Regex
+        {
+            get
+            {
+                if (this.regex == null)
+                {
+                    this.regex = new Regex(this.FindPattern);
+                }
+
+                return this.regex;
+            }
+        }
+
         /// <summary>
         /// Initializes a new instance of the RegexReplaceTransform class
         /// </summary>
@@ -98,7 +113,7 @@
         /// <returns>The transformed value</returns>
         private object PerformRegexReplace(string value)
         {
-            string newValue = Regex.Replace(value, this.FindPattern ?? string.Empty, this.ReplacePattern ?? string.Empty);
+            string newValue = this.Regex.Replace(value, this.ReplacePattern ?? string.Empty);
 
             return string.IsNullOrEmpty(newValue) ? null : newValue;
         }

@@ -40,6 +40,17 @@ namespace Lithnet.Transforms.UnitTests
         }
 
         [TestMethod()]
+        public void PerformanceTest()
+        {
+            ADGroupTypeToStringTransform transform = new ADGroupTypeToStringTransform();
+
+            UnitTestControl.PerformanceTest(() =>
+            {
+                Assert.AreEqual("Security", transform.TransformValue(-2147483646).First());
+            }, 700000);
+        }
+
+        [TestMethod()]
         public void TestSecurityDomainLocal()
         {
             ADGroupTypeToStringTransform transform = new ADGroupTypeToStringTransform();

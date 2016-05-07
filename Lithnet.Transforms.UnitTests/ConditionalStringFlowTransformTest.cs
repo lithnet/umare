@@ -80,9 +80,24 @@ namespace Lithnet.Transforms.UnitTests
             ConditionalStringFlowTransform transform = new ConditionalStringFlowTransform();
             transform.ComparisonType = StringComparison.OrdinalIgnoreCase;
 
-            this.ExecuteConditionalStringFlowTransform(transform, new List<object>() { "bob", "jim" }, new List<object>() { "Bob", "Jim" }, new List<object>() { "bob", "jim" });
+            this.ExecuteConditionalStringFlowTransform(transform,new List<object>() { "bob", "jim" },new List<object>() { "Bob", "Jim" }, new List<object>() { "bob", "jim" });
         }
 
+        [TestMethod()]
+        public void PerformanceTest()
+        {
+            ConditionalStringFlowTransform transform = new ConditionalStringFlowTransform();
+            transform.ComparisonType = StringComparison.OrdinalIgnoreCase;
+
+            UnitTestControl.PerformanceTest(() =>
+            {
+                CollectionAssert.AreEqual(new List<object>() { "bob", "jim" },
+                    transform.TransformValuesWithLoopback(
+                        new List<object>() { "Bob", "Jim" },
+                        new List<object>() { "bob", "jim" }
+                        ).ToArray());
+            }, 150000);
+        }
 
         [TestMethod()]
         public void MVLoopBackTestMVTargetOneMatch()

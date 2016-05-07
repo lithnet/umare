@@ -6,7 +6,7 @@
     using System.Security.Principal;
     using Lithnet.MetadirectoryServices;
     using Microsoft.MetadirectoryServices;
-
+    using System.Collections;
     /// <summary>
     /// Extracts a domain name or domain SID from a user SID
     /// </summary>
@@ -14,13 +14,15 @@
     [System.ComponentModel.Description("SID to domain")]
     public class SidToDomainTransform : Transform
     {
+        Dictionary<SecurityIdentifier, string> resolvedNames = new Dictionary<SecurityIdentifier, string>();
+
         /// <summary>
         /// Initializes a new instance of the SidToDomainTransform class
         /// </summary>
         public SidToDomainTransform()
         {
         }
-        
+
         /// <summary>
         /// Defines the data types that this transform may return
         /// </summary>
@@ -107,8 +109,6 @@
         {
             SecurityIdentifier sidObject = new SecurityIdentifier(sid, 0);
             SecurityIdentifier domainSid = sidObject.AccountDomainSid;
-            byte[] domainSidBytes = new byte[domainSid.BinaryLength];
-            domainSid.GetBinaryForm(domainSidBytes, 0);
 
             switch (this.Format)
             {
@@ -116,20 +116,32 @@
                     return domainSid.Value;
 
                 case DomainFormat.DomainSidBinary:
+                    byte[] domainSidBytes = new byte[domainSid.BinaryLength];
+                    domainSid.GetBinaryForm(domainSidBytes, 0);
                     return domainSidBytes;
 
                 case DomainFormat.DomainName:
-
-                    try
+                    if (!this.resolvedNames.ContainsKey(domainSid))
                     {
-                        NTAccount account = (NTAccount)sidObject.Translate(typeof(NTAccount));
-                        return account.ToString().Split('\\')[0];
-                    }
-                    catch
-                    {
-                        return Utils.ConvertSidToString(domainSidBytes);
-                    }
+                        string name;
 
+                        try
+                        {
+                            NTAccount account = (NTAccount)sidObject.Translate(typeof(NTAccount));
+                            name = account.ToString().Split('\\')[0];
+                        }
+                        catch
+                        {
+                            name = null;
+                        }
+
+                        this.resolvedNames.Add(domainSid, name);
+                        return name;
+                    }
+                    else
+                    {
+                        return this.resolvedNames[domainSid];
+                    }
                 default:
                     throw new NotSupportedException();
             }

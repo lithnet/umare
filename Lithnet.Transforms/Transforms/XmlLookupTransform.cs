@@ -14,6 +14,23 @@
     [System.ComponentModel.Description("XML file lookup")]
     public class XmlLookupTransform : Transform
     {
+        private XPathNavigator nav;
+
+        private XPathNavigator Navigator
+        {
+            get
+            {
+                if (this.nav == null)
+                {
+                    XmlDocument doc = new XmlDocument();
+                    doc.Load(this.FileName);
+                    this.nav = doc.CreateNavigator();
+                }
+
+                return this.nav;
+            }
+        }
+
         /// <summary>
         /// Initializes a new instance of the XmlLookupTransform class
         /// </summary>
@@ -145,12 +162,10 @@
         /// <returns>The replacement value</returns>
         private object LookupReplacement(string inputValue)
         {
-            XmlDocument doc = new XmlDocument();
-            doc.Load(this.FileName);
-            XPathNavigator navigator = doc.CreateNavigator();
+            
             string sourcePath = this.XPathQuery.Replace("{attributeValue}", System.Security.SecurityElement.Escape(inputValue));
 
-            object returnValue = navigator.Evaluate(sourcePath);
+            object returnValue = this.Navigator.Evaluate(sourcePath);
 
             if (returnValue is XPathNodeIterator)
             {

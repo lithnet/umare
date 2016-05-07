@@ -19,7 +19,6 @@ namespace Lithnet.Umare.UnitTests
 
         public ExportTests()
         {
-            Lithnet.Logging.Logger.LogLevel = Logging.LogLevel.Debug;
             UINotifyPropertyChanges.BeginIgnoreAllChanges();
             MAExtensionObject re = new MAExtensionObject();
             this.re = re;

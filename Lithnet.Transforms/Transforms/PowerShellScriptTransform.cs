@@ -19,7 +19,7 @@
     {
         private string scriptText;
 
-        private Runspace runspace;
+        private PowerShell ps;
 
         /// <summary>
         /// Initializes a new instance of the PowerShellScriptTransform class
@@ -28,17 +28,18 @@
         {
         }
 
-        private Runspace Runspace
+        private PowerShell PS
         {
             get
             {
-                if (this.runspace == null)
+                if (this.ps == null)
                 {
-                    this.runspace = RunspaceFactory.CreateRunspace();
-                    this.runspace.Open();
+                    this.ps = PowerShell.Create();
+                    this.ps.AddScript(this.ScriptText);
+                    this.ps.Invoke();
                 }
 
-                return this.runspace;
+                return this.ps;
             }
         }
 
@@ -152,21 +153,18 @@
         {
             List<object> returnItems = new List<object>();
 
-            using (PowerShell ps = PowerShell.Create())
+            this.PS.Commands.Clear();
+            this.PS.Commands.AddCommand("Transform-Values");
+            this.PS.AddParameter("items", inputValues.ToArray());
+
+            foreach (var item in this.PS.Invoke())
             {
-                ps.Runspace = this.Runspace;
-                ps.AddScript(this.ScriptText);
-                ps.AddParameter("items", inputValues.ToArray());
-
-                foreach (var item in ps.Invoke())
+                if (item == null)
                 {
-                    if (item == null)
-                    {
-                        continue;
-                    }
-
-                    returnItems.Add(item.BaseObject);
+                    continue;
                 }
+
+                returnItems.Add(item.BaseObject);
             }
 
             return returnItems;

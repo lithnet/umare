@@ -6,6 +6,7 @@ using Lithnet.Transforms;
 using Microsoft.MetadirectoryServices;
 using Lithnet.Common.ObjectModel;
 using System.Linq;
+using System.Diagnostics;
 
 namespace Lithnet.Transforms.UnitTests
 {
@@ -75,6 +76,33 @@ namespace Lithnet.Transforms.UnitTests
             transform.Direction = Direction.Left;
 
             this.ExecuteTestSubString(transform, "newington", "new");
+        }
+
+        [TestMethod()]
+        public void PerformanceTest()
+        {
+            SubstringTransform transform = new SubstringTransform();
+            transform.Length = 3;
+            transform.PaddingType = PadType.None;
+            transform.Direction = Direction.Left;
+
+            int cycles = 200000;
+
+            Stopwatch t = new Stopwatch();
+            t.Start();
+
+            for (int i = 0; i < cycles; i++)
+            {
+                Assert.AreEqual("abc", transform.TransformValue("abcdef").FirstOrDefault());
+            }
+
+            t.Stop();
+            int objSec = (int)(cycles / t.Elapsed.TotalSeconds);
+
+            if (objSec < 500000)
+            {
+                Assert.Fail("Perf test failed: {0} obj/sec", objSec);
+            }
         }
 
         [TestMethod()]

@@ -348,6 +348,21 @@ namespace Lithnet.Transforms.UnitTests
             this.ExecuteTestStringToTicks(transform, "2014-01-02T10:00:00.000", new DateTime(2014, 1, 2, 10, 0, 0, DateTimeKind.Utc).ToLocalTime().Ticks);
         }
 
+        [TestMethod()]
+        public void PerformanceTest()
+        {
+            DateConverterTransform transform = new DateConverterTransform();
+            transform.InputTimeZone = TimeZoneInfo.Utc;
+            transform.InputDateType = DateType.FimServiceString;
+            transform.OutputTimeZone = TimeZoneInfo.Local;
+            transform.OutputDateType = DateType.Ticks;
+
+            UnitTestControl.PerformanceTest(() =>
+            {
+                Assert.AreEqual(new DateTime(2014, 1, 2, 10, 0, 0, DateTimeKind.Utc).ToLocalTime().Ticks, transform.TransformValue("2014-01-02T10:00:00.000").First());
+            }, 80000);
+        }
+
         private void ExecuteTestStringToTicks(DateConverterTransform transform, string sourceValue, long expectedValue)
         {
             long outValue = (long)transform.TransformValue(sourceValue).FirstOrDefault();

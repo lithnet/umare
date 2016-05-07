@@ -60,6 +60,18 @@ namespace Lithnet.Transforms.UnitTests
         }
 
         [TestMethod()]
+        public void PerformanceTest()
+        {
+           StringCaseTransform transform = new StringCaseTransform();
+            transform.StringCase = StringCaseType.Lower;
+
+            UnitTestControl.PerformanceTest(() =>
+            {
+                Assert.AreEqual("this is a test", transform.TransformValue("THIS is a TEST").First());
+            }, 400000);
+        }
+        
+        [TestMethod()]
         public void StringCaseUpperTest()
         {
             StringCaseTransform transform = new StringCaseTransform();

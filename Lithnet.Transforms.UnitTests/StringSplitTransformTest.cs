@@ -7,6 +7,7 @@ using Microsoft.MetadirectoryServices;
 using Lithnet.Common.ObjectModel;
 using System.Linq;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Lithnet.Transforms.UnitTests
 {
@@ -43,6 +44,32 @@ namespace Lithnet.Transforms.UnitTests
             transform.SplitRegex = ",";
 
             this.ExecuteTest(transform, new List<object>() { "1,2,3" }, new List<string>() { "1", "2", "3" });
+        }
+
+
+        [TestMethod()]
+        public void PerformanceTest()
+        {
+            StringSplitTransform transform = new StringSplitTransform();
+            transform.SplitRegex = ",";
+
+            int cycles = 200000;
+
+            Stopwatch t = new Stopwatch();
+            t.Start();
+
+            for (int i = 0; i < cycles; i++)
+            {
+                CollectionAssert.AreEqual(new string[] { "1", "2", "3" }, transform.TransformValue("1,2,3").ToArray());
+            }
+
+            t.Stop();
+            int objSec = (int)(cycles / t.Elapsed.TotalSeconds);
+
+            if (objSec < 150000)
+            {
+                Assert.Fail("Perf test failed: {0} obj/sec", objSec);
+            }
         }
 
         [TestMethod()]

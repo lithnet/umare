@@ -14,6 +14,20 @@
     [System.ComponentModel.Description("String split transform")]
     public class StringSplitTransform : Transform
     {
+        private Regex regex;
+
+        private Regex Regex
+        {
+            get
+            {
+                if (this.regex == null)
+                {
+                    this.regex = new Regex(this.SplitRegex);
+                }
+
+                return this.regex;
+            }
+        }
         /// <summary>
         /// Initializes a new instance of the StringSplitTransform class
         /// </summary>
@@ -71,7 +85,7 @@
         /// <returns>An attribute value</returns>
         private object GetSingleValue(string inputValue)
         {
-            string[] values = Regex.Split(inputValue, this.SplitRegex);
+            string[] values = this.Regex.Split(inputValue);
 
             return values.ToList<object>();
         }

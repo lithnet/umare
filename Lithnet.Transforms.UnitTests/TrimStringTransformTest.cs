@@ -6,6 +6,7 @@ using Lithnet.Transforms;
 using Microsoft.MetadirectoryServices;
 using Lithnet.Common.ObjectModel;
 using System.Linq;
+using System.Diagnostics;
 
 namespace Lithnet.Transforms.UnitTests
 {
@@ -48,6 +49,31 @@ namespace Lithnet.Transforms.UnitTests
 
             Assert.AreEqual(transformToSeralize.ID, deserializedTransform.ID);
             Assert.AreEqual(transformToSeralize.TrimType, deserializedTransform.TrimType);
+        }
+
+        [TestMethod()]
+        public void PerformanceTest()
+        {
+            TrimStringTransform transform = new TrimStringTransform();
+            transform.TrimType = TrimType.Left;
+
+            int cycles = 200000;
+
+            Stopwatch t = new Stopwatch();
+            t.Start();
+
+            for (int i = 0; i < cycles; i++)
+            {
+                Assert.AreEqual("1234", transform.TransformValue("    1234").FirstOrDefault());
+            }
+
+            t.Stop();
+            int objSec = (int)(cycles / t.Elapsed.TotalSeconds);
+
+            if (objSec < 500000)
+            {
+                Assert.Fail("Perf test failed: {0} obj/sec", objSec);
+            }
         }
 
         [TestMethod()]

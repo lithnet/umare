@@ -5,6 +5,7 @@
     using System.Runtime.Serialization;
     using System.Text;
     using Lithnet.MetadirectoryServices;
+    using System.Linq;
 
     /// <summary>
     /// Concatenates several string together using a specified delimiter
@@ -69,31 +70,7 @@
         /// <returns>The transformed values</returns>
         protected override IList<object> TransformMultipleValues(IList<object> inputValues)
         {
-            List<object> list = new List<object>();
-            StringBuilder builder = new StringBuilder();
-
-            foreach (object value in inputValues)
-            {
-                if (value == null)
-                {
-                    continue;
-                }
-
-                builder.AppendFormat("{0}{1}", TypeConverter.ConvertData<string>(value), this.Delimiter);
-            }
-
-            string newString = builder.ToString();
-
-            if (newString.EndsWith(this.Delimiter))
-            {
-                list.Add(newString.Substring(0, newString.Length - this.Delimiter.Length));
-            }
-            else
-            {
-                list.Add(newString);
-            }
-
-            return list;
+            return new List<object>() { string.Join(this.Delimiter, inputValues.Select(t => TypeConverter.ConvertData<string>(t))) };
         }
     }
 }

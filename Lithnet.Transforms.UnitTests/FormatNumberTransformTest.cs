@@ -73,6 +73,18 @@ namespace Lithnet.Transforms.UnitTests
         }
 
         [TestMethod()]
+        public void PerformanceTest()
+        {
+            FormatNumberTransform transform = new FormatNumberTransform();
+            transform.Format = "X8";
+
+            UnitTestControl.PerformanceTest(() =>
+            {
+                Assert.AreEqual("000000FF", transform.TransformValue(255).First());
+            }, 800000);
+        }
+
+        [TestMethod()]
         public void ExecuteTestFormatNumberAsPercent()
         {
             FormatNumberTransform transform = new FormatNumberTransform();

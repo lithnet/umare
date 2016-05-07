@@ -56,6 +56,19 @@ namespace Lithnet.Transforms.UnitTests
         }
 
         [TestMethod()]
+        public void PerformanceTest()
+        {
+            BitmaskTransform transform = new BitmaskTransform();
+            transform.Flag = 2;
+            transform.Operation = BitwiseOperation.Or;
+
+            UnitTestControl.PerformanceTest(() =>
+            {
+                Assert.AreEqual(514L, transform.TransformValue(512).First());
+            }, 900000);
+        }
+
+        [TestMethod()]
         public void BitmaskPrimaryInputTestNand()
         {
             BitmaskTransform transform = new BitmaskTransform();

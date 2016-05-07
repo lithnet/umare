@@ -96,6 +96,19 @@ namespace Lithnet.Transforms.UnitTests
             this.ExecuteTest(transform, new List<object>() { "Security", "Global" }, -2147483646);
         }
 
+
+        [TestMethod()]
+        public void PerformanceTest()
+        {
+            GroupStringsToADGroupTypeTransform transform = new GroupStringsToADGroupTypeTransform();
+
+            UnitTestControl.PerformanceTest(() =>
+            {
+                Assert.AreEqual(-2147483646L, transform.TransformValue(new List<object>() { "Security", "Global" }).First());
+            }, 300000);
+        }
+
+
         [TestMethod()]
         public void TestSecurityDomainLocal()
         {

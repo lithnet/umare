@@ -63,7 +63,7 @@
             }
             else
             {
-                return inputValue;
+                return this.PerformLogicalComparison(new List<bool>() { TypeConverter.ConvertData<bool>(inputValue) });
             }
         }
 

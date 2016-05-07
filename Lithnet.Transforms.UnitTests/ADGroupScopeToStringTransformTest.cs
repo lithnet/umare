@@ -40,6 +40,17 @@ namespace Lithnet.Transforms.UnitTests
         }
 
         [TestMethod()]
+        public void PerformanceTest()
+        {
+            ADGroupScopeToStringTransform transform = new ADGroupScopeToStringTransform();
+
+            UnitTestControl.PerformanceTest(() =>
+            {
+                Assert.AreEqual("Global", transform.TransformValue(-2147483646).First());
+            }, 700000);
+        }
+
+        [TestMethod()]
         public void TestSecurityDomainLocal()
         {
             ADGroupScopeToStringTransform transform = new ADGroupScopeToStringTransform();

@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Windows;
 using Lithnet.Common.ObjectModel;
 using Lithnet.Common.Presentation;
-using Lithnet.Logging;
+//using Lithnet.Logging;
 using Microsoft.Win32;
 using System.Windows.Input;
 using System.Windows.Controls;
@@ -219,7 +219,7 @@ namespace Lithnet.Umare.Presentation
                 }
                 catch (Exception ex)
                 {
-                    Logger.WriteException(ex);
+                    //Logger.WriteException(ex);
                     MessageBox.Show(string.Format("Could not open the file\n\n{0}", ex.Message), "File Open", MessageBoxButton.OK, MessageBoxImage.Error);
                     this.Cursor = Cursors.Arrow;
 
@@ -316,7 +316,7 @@ namespace Lithnet.Umare.Presentation
             }
             catch (Exception ex)
             {
-                Logger.WriteException(ex);
+                //Logger.WriteException(ex);
                 MessageBox.Show(string.Format("Could not save the file\n\n{0}", ex.Message), "File Save", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             finally
@@ -344,7 +344,7 @@ namespace Lithnet.Umare.Presentation
             }
             catch (Exception ex)
             {
-                Logger.WriteException(ex);
+                //Logger.WriteException(ex);
                 MessageBox.Show(string.Format("Could not create a new file\n\n{0}", ex.Message), "New File", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             finally
@@ -385,7 +385,7 @@ namespace Lithnet.Umare.Presentation
             }
             catch (Exception ex)
             {
-                Logger.WriteException(ex);
+                //Logger.WriteException(ex);
                 MessageBox.Show(string.Format("Could not save the file\n\n{0}", ex.Message), "Save File", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             finally

@@ -6,6 +6,7 @@ using Lithnet.Transforms;
 using Microsoft.MetadirectoryServices;
 using Lithnet.Common.ObjectModel;
 using System.Linq;
+using System.Diagnostics;
 
 namespace Lithnet.Transforms.UnitTests
 {
@@ -31,7 +32,7 @@ namespace Lithnet.Transforms.UnitTests
             Assert.AreEqual(transformToSeralize.ID, deserializedTransform.ID);
             Assert.AreEqual(transformToSeralize.EscapeType, deserializedTransform.EscapeType);
         }
-        
+
         [TestMethod()]
         public void TestEscapeXmlAmp()
         {
@@ -39,6 +40,43 @@ namespace Lithnet.Transforms.UnitTests
             transform.EscapeType = StringEscapeType.XmlElement;
 
             this.ExecuteTest(transform, "Things & stuff", "Things &amp; stuff");
+        }
+
+        [TestMethod()]
+        public void PerformanceTestXml()
+        {
+            StringEscapeTransform transform = new StringEscapeTransform();
+            transform.EscapeType = StringEscapeType.XmlElement;
+
+            int cycles = 200000;
+
+            Stopwatch t = new Stopwatch();
+            t.Start();
+
+            for (int i = 0; i < cycles; i++)
+            {
+                Assert.AreEqual("Things &amp; stuff", transform.TransformValue("Things & stuff").First());
+            }
+
+            t.Stop();
+            int objSec = (int)(cycles / t.Elapsed.TotalSeconds);
+
+            if (objSec < 400000)
+            {
+                Assert.Fail("Perf test failed: {0} obj/sec", objSec);
+            }
+        }
+
+        [TestMethod()]
+        public void PerformanceTestLdap()
+        {
+            StringEscapeTransform transform = new StringEscapeTransform();
+            transform.EscapeType = StringEscapeType.LdapDN;
+
+            UnitTestControl.PerformanceTest(() =>
+            {
+                Assert.AreEqual("\"Department of, IT\"", transform.TransformValue("Department of, IT").First());
+            }, 250000);
         }
 
         [TestMethod()]

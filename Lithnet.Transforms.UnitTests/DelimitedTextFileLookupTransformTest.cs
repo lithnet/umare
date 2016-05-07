@@ -66,6 +66,24 @@ namespace Lithnet.Transforms.UnitTests
         }
 
         [TestMethod()]
+        public void PerformanceTest()
+        {
+            DelimitedTextFileLookupTransform transform = new DelimitedTextFileLookupTransform();
+            transform.FileName = @"..\..\TestData\OUMappings.tsv";
+            transform.HasHeaderRow = false;
+            transform.FindColumn = 0;
+            transform.ReplaceColumn = 1;
+            transform.OnMissingMatch = OnMissingMatch.UseOriginal;
+            transform.DelimiterType = DelimiterType.TabSeparated;
+            transform.UserDefinedReturnType = ExtendedAttributeType.String;
+
+            UnitTestControl.PerformanceTest(() =>
+            {
+                Assert.AreEqual("MyName", transform.TransformValue("1234").First());
+            }, 300000);
+        }
+
+        [TestMethod()]
         public void DtfTransformCustomValueTestWithEscapeCharacters()
         {
             DelimitedTextFileLookupTransform transform = new DelimitedTextFileLookupTransform();

@@ -1,8 +1,9 @@
-param (
-    $items
-    )
-
-foreach ($item in $items)
+function Transform-Values
 {
-    write-output ($item + 1)
+	param ($items)
+
+	foreach ($item in $items)
+	{
+		write-output ($item + 1);
+	}
 }

@@ -60,6 +60,18 @@ namespace Lithnet.Transforms.UnitTests
         }
 
         [TestMethod()]
+        public void PerformanceTest()
+        {
+            BitmaskToBooleanTransform transform = new BitmaskToBooleanTransform();
+            transform.Flag = 2;
+
+            UnitTestControl.PerformanceTest(() =>
+            {
+                Assert.AreEqual(true, transform.TransformValue(514).First());
+            }, 900000);
+        }
+
+        [TestMethod()]
         public void BitmaskTestFalse()
         {
             BitmaskToBooleanTransform transform = new BitmaskToBooleanTransform();

@@ -74,6 +74,19 @@ namespace Lithnet.Transforms.UnitTests
         }
 
         [TestMethod()]
+        public void PerformanceTest()
+        {
+            GetDNComponentTransform transform = new GetDNComponentTransform();
+            transform.ComponentIndex = 1;
+            transform.RdnFormat = RdnFormat.ValueOnly;
+            transform.Direction = Direction.Left;
+            UnitTestControl.PerformanceTest(() =>
+            {
+                Assert.AreEqual("Test user", transform.TransformValue("cn=Test user, ou=Organisation").First());
+            }, 200000);
+        }
+
+        [TestMethod()]
         public void GetDNComponentTransformValueEscaped()
         {
             GetDNComponentTransform transform = new GetDNComponentTransform();

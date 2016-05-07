@@ -299,7 +299,7 @@ namespace Lithnet.Umare
             return values;
         }
 
-        private void SetDestinationAttributeValueForImport(FlowRuleParameters parameters, MVEntry mventry, IEnumerable<object> values, bool clearTarget)
+        private void SetDestinationAttributeValueForImport(FlowRuleParameters parameters, MVEntry mventry, IList<object> values, bool clearTarget)
         {
             Attrib attribute = mventry[parameters.TargetAttributeName];
             if (clearTarget)
@@ -310,17 +310,17 @@ namespace Lithnet.Umare
             this.SetDestinationAttributeValue(parameters, values, attribute);
         }
 
-        private void SetDestinationAttributeValueForExport(FlowRuleParameters parameters, CSEntry csentry, IEnumerable<object> values)
+        private void SetDestinationAttributeValueForExport(FlowRuleParameters parameters, CSEntry csentry, IList<object> values)
         {
             Attrib attribute = csentry[parameters.TargetAttributeName];
             this.SetDestinationAttributeValue(parameters, values, attribute);
         }
 
-        private void SetDestinationAttributeValue(FlowRuleParameters parameters, IEnumerable<object> values, Attrib attribute)
+        private void SetDestinationAttributeValue(FlowRuleParameters parameters, IList<object> values, Attrib attribute)
         {
             if (attribute.IsMultivalued)
             {
-                if (values.Count() == 0)
+                if (values.Count == 0)
                 {
                     attribute.Delete();
                 }
@@ -331,11 +331,11 @@ namespace Lithnet.Umare
             }
             else
             {
-                if (values.Count() > 1)
+                if (values.Count > 1)
                 {
                     throw new TooManyValuesException(parameters.TargetAttributeName);
                 }
-                else if (values.Count() == 0)
+                else if (values.Count == 0)
                 {
                     attribute.Delete();
                 }
@@ -373,14 +373,14 @@ namespace Lithnet.Umare
             }
         }
 
-        private void SetAttributeValues(IEnumerable<object> attributeValues, Attrib attribute)
+        private void SetAttributeValues(IList<object> attributeValues, Attrib attribute)
         {
             if (attribute.Values.Count > 0)
             {
                 attribute.Values.Clear();
             }
 
-            if (!attribute.IsMultivalued && attributeValues.Count() > 1)
+            if (!attribute.IsMultivalued && attributeValues.Count > 1)
             {
                 throw new TooManyValuesException(attribute.Name);
             }
@@ -457,7 +457,7 @@ namespace Lithnet.Umare
             return csEntryAttributeValue;
         }
 
-        private IEnumerable<object> GetMVAttributeValue(Attrib attribute)
+        private IList<object> GetMVAttributeValue(Attrib attribute)
         {
             List<object> attributeValues = new List<object>();
 

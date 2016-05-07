@@ -68,6 +68,24 @@ namespace Lithnet.Transforms.UnitTests
             this.ExecuteTestBitwiseTransformLoopbackInput(transform, 514, new List<object>() { true, false }, 514);
         }
 
+
+        [TestMethod()]
+        public void PerformanceTest()
+        {
+            MVBooleanToBitmaskTransform transform = new MVBooleanToBitmaskTransform();
+            transform.Flags.Add(new FlagValue() { Value = 2 });
+            transform.Flags.Add(new FlagValue() { Value = 4 });
+
+            UnitTestControl.PerformanceTest(() =>
+            {
+                Assert.AreEqual(518L,
+                    transform.TransformValuesWithLoopback(
+                       new List<object>() { true, true },
+                        new List<object>() { 512 }
+                        ).First());
+            }, 350000);
+        }
+
         [TestMethod()]
         public void BitmaskLoopbackInputTestWithNullPrimaryInput()
         {

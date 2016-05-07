@@ -44,6 +44,31 @@ public static class CSExtension
             CollectionAssert.AreEqual(expected, results.ToArray());
         }
 
+        [TestMethod()]
+        public void PerformanceTest()
+        {
+            CSharpScriptTransform transform = new CSharpScriptTransform();
+            transform.ScriptText = @"
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Xml;
+using Lithnet.Transforms;
+using Microsoft.MetadirectoryServices;
+
+public static class CSExtension
+{
+    public static IList<object> Transform(IList<object> obj)
+    {
+        return new List<object>() { obj.First() };        
+    }
+}";
+
+            UnitTestControl.PerformanceTest(() =>
+            {
+                Assert.AreEqual("1", transform.TransformValue("1").First());
+            }, 130000);
+        }
         [TestMethod]
         public void TestMV()
         {

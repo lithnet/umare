@@ -70,7 +70,22 @@ namespace Lithnet.Transforms.UnitTests
 
             this.ExecuteTestString(transform, "test1", "test2");
         }
-              
+
+        [TestMethod()]
+        public void PerformanceTest()
+        {
+            SimpleLookupTransform transform = new SimpleLookupTransform();
+            transform.LookupItems.Add(new LookupItem() { CurrentValue = "test1", NewValue = "test2" });
+            transform.LookupItems.Add(new LookupItem() { CurrentValue = "test3", NewValue = "test4" });
+            transform.OnMissingMatch = OnMissingMatch.UseOriginal;
+            transform.UserDefinedReturnType = ExtendedAttributeType.String;
+
+            UnitTestControl.PerformanceTest(() =>
+            {
+                Assert.AreEqual("test2", transform.TransformValue("test1").First());
+            }, 400000);
+        }
+
         [TestMethod()]
         public void SimpleLookupTransformStringUseNull()
         {

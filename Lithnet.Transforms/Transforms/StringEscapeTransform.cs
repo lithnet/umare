@@ -14,6 +14,17 @@
     [System.ComponentModel.Description("Escape string")]
     public class StringEscapeTransform : Transform
     {
+        Dictionary<string, string> replacements = new Dictionary<string, string>()
+                { {@"\", @"\\"},
+                  {@"#", @"\#"},
+                  {@"+", @"\+"},
+                  {@";", @"\;"},
+                  {@"=", @"\="},
+                  {"\"", "\\\""},
+                  {@"<", @"\<"},
+                  {@">", @"\>"}};
+
+
         /// <summary>
         /// Initializes a new instance of the StringCaseTransform class
         /// </summary>
@@ -96,20 +107,10 @@
 
         private string EscapeLdapDN(string s)
         {
-            var replacements = new Dictionary<string, string>()
-                { {@"\", @"\\"},
-                  {@"#", @"\#"},
-                  {@"+", @"\+"},
-                  {@";", @"\;"},
-                  {@"=", @"\="},
-                  {"\"", "\\\""},
-                  {@"<", @"\<"},
-                  {@">", @"\>"}};
-
             string ret = s;
 
             //escape the chars that need to be escaped
-            foreach (var pair in replacements)
+            foreach (var pair in this.replacements)
             {
                 ret = ret.Replace(pair.Key, pair.Value);
             }

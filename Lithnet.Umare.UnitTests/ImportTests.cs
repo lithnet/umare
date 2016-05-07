@@ -19,7 +19,6 @@ namespace Lithnet.Umare.UnitTests
 
         public ImportTests()
         {
-            Lithnet.Logging.Logger.LogLevel = Logging.LogLevel.Debug;
             UINotifyPropertyChanges.BeginIgnoreAllChanges();
             MAExtensionObject re = new MAExtensionObject();
             this.re = re;
@@ -43,6 +42,75 @@ namespace Lithnet.Umare.UnitTests
                 new List<object>() { "Test User" },
                 new List<object>() { "CN=Test User, OU=Test" }
                 );
+        }
+
+        [TestMethod]
+        public void PerformanceTestImports()
+        {
+            GetDNComponentTransform tx = new GetDNComponentTransform();
+            tx.ID = "GetDN1";
+            tx.ComponentIndex = 1;
+            tx.RdnFormat = RdnFormat.ValueOnly;
+
+            this.re.config.Transforms.Add(tx);
+
+
+            AttributeType targetDataType = AttributeType.String;
+            AttributeType sourceDataType = AttributeType.String;
+
+            List<Transform> transforms = new List<Transform>() { tx };
+            List<object> sourceAttribute = new List<object>() { "CN=Test User, OU=Test" };
+            List<List<object>> sourceAttributes = new List<List<object>>() { sourceAttribute };
+
+            string mvattributeName = "mvattribute";
+
+            TestMVEntry mventry = new TestMVEntry();
+            mventry.Add(this.CreateAttribute(mvattributeName, targetDataType, false, null));
+
+            TestCSEntry csentry = new TestCSEntry();
+
+            int count = 0;
+            List<string> attributeNames = new List<string>();
+
+            foreach (List<object> attribute in sourceAttributes)
+            {
+                count++;
+                string attributeName = "csattribute" + count;
+                attributeNames.Add(attributeName);
+
+                if (attribute.Count > 1)
+                {
+                    csentry.Add(this.CreateAttribute(attributeName, sourceDataType, attribute));
+                }
+                else if (attribute.Count == 1)
+                {
+                    csentry.Add(this.CreateAttribute(attributeName, sourceDataType, false, attribute.First()));
+                }
+                else
+                {
+                    throw new NullReferenceException("A value must be provided");
+                }
+            }
+
+            List<string> transformNames = new List<string>();
+            foreach (Transform transform in transforms)
+            {
+                transformNames.Add(transform.ID);
+            }
+
+            string flowRuleName = string.Format(
+                "{0}>>{1}>>{2}",
+                attributeNames.ToSeparatedString("+"),
+                transformNames.ToSeparatedString(">>"),
+                mvattributeName);
+
+
+            UnitTestControl.PerformanceTest(() =>
+            {
+                this.rulesExtension.MapAttributesForImport(flowRuleName, csentry, mventry);
+                Assert.AreEqual("Test User", mventry["mvattribute"].StringValue);
+
+            }, 200000);
         }
 
         [TestMethod]

@@ -67,6 +67,19 @@ namespace Lithnet.Transforms.UnitTests
             this.ExecuteTestSubString(transform, "Ry^*an", "Ryan");
         }
 
+        [TestMethod()]
+        public void PerformanceTest()
+        {
+            RegexReplaceTransform transform = new RegexReplaceTransform();
+            transform.FindPattern = @"[^a-zA-Z\-]";
+            transform.ReplacePattern = string.Empty;
+
+            UnitTestControl.PerformanceTest(() =>
+            {
+                Assert.AreEqual("Ryan", transform.TransformValue("Ry^*an").First());
+            }, 250000);
+        }
+
         private void ExecuteTestSubString(RegexReplaceTransform transform, string sourceValue, string expectedValue)
         {
             string outValue = transform.TransformValue(sourceValue).FirstOrDefault() as string;

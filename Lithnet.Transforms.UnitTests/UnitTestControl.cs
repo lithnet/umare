@@ -5,11 +5,12 @@ using System.Text;
 using Lithnet.MetadirectoryServices;
 using Lithnet.Transforms;
 using System.Xml;
-using Lithnet.Logging;
+using System.Diagnostics;
 using System.IO;
 using System.Xml.Serialization;
 using System.Xml.Schema;
 using System.Runtime.Serialization;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Lithnet.Transforms.UnitTests
 {
@@ -25,8 +26,8 @@ namespace Lithnet.Transforms.UnitTests
 
                 TransformGlobal.HostProcessSupportsLoopbackTransforms = true;
                 TransformGlobal.HostProcessSupportsNativeDateTime = true;
-                Logger.LogPath = @"D:\MAData\Lithnet.Transforms\Lithnet.transforms.unittests.log";
-                Logger.LogLevel = LogLevel.Debug;
+                //Logger.LogPath = @"D:\MAData\Lithnet.Transforms\Lithnet.transforms.unittests.log";
+               // Logger.LogLevel = LogLevel.Debug;
                 initialized = true;
             }
         }
@@ -88,6 +89,26 @@ namespace Lithnet.Transforms.UnitTests
                     System.Diagnostics.Debug.WriteLine(System.IO.File.ReadAllText(filename));
                     File.Delete(filename);
                 }
+            }
+        }
+
+        public static void PerformanceTest(Action action, int expectedRate, int cycles = 200000)
+        {
+            Stopwatch t = new Stopwatch();
+            t.Start();
+
+            for (int i = 0; i < cycles; i++)
+            {
+                action.Invoke();
+            }
+
+            t.Stop();
+
+            int objSec = (int)(cycles / t.Elapsed.TotalSeconds);
+
+            if (objSec < expectedRate)
+            {
+                Assert.Fail("Perf test failed: {0} obj/sec", objSec);
             }
         }
 

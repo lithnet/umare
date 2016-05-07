@@ -6,6 +6,7 @@ using Lithnet.Transforms;
 using Microsoft.MetadirectoryServices;
 using Lithnet.Common.ObjectModel;
 using System.Linq;
+using System.Diagnostics;
 
 namespace Lithnet.Transforms.UnitTests
 {
@@ -42,6 +43,34 @@ namespace Lithnet.Transforms.UnitTests
             Assert.AreEqual(transformToSeralize.XPathQuery, deserializedTransform.XPathQuery);
             Assert.AreEqual(transformToSeralize.OnMissingMatch, deserializedTransform.OnMissingMatch);
             Assert.AreEqual(transformToSeralize.UserDefinedReturnType, deserializedTransform.UserDefinedReturnType);
+        }
+
+        [TestMethod()]
+        public void PerformanceTest()
+        {
+            XmlLookupTransform transform = new XmlLookupTransform();
+            transform.FileName = @"..\..\TestData\OUMappings.xml";
+            transform.XPathQuery = @"OUMappings/OUMapping[@sapOUNumber='{attributeValue}']/@MDSDisplayName";
+            transform.OnMissingMatch = OnMissingMatch.UseOriginal;
+            transform.UserDefinedReturnType = ExtendedAttributeType.String;
+
+            int cycles = 200000;
+
+            Stopwatch t = new Stopwatch();
+            t.Start();
+
+            for (int i = 0; i < cycles; i++)
+            {
+                Assert.AreEqual("MyName", transform.TransformValue("1234").FirstOrDefault());
+            }
+
+            t.Stop();
+            int objSec = (int)(cycles / t.Elapsed.TotalSeconds);
+
+            if (objSec < 60000)
+            {
+                Assert.Fail("Perf test failed: {0} obj/sec", objSec);
+            }
         }
 
         [TestMethod()]

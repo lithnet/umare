@@ -19,7 +19,7 @@ namespace Lithnet.Transforms
     using System.Text.RegularExpressions;
     using Lithnet.Common.ObjectModel;
     using System.Xml.Schema;
-    using Lithnet.Logging;
+    //using Lithnet.Logging;
     using System.Reflection;
 
     /// <summary>
@@ -181,7 +181,7 @@ namespace Lithnet.Transforms
                 }
             }
 
-            Logger.WriteLine("Transform {0}: {1} -> {2}", LogLevel.Debug, this.ID, inputValue.ToSmartStringOrNull(), returnValues.Where(t => t != null).Select(u => u.ToSmartStringOrNull()).ToCommaSeparatedString());
+            //Logger.WriteLine("Transform {0}: {1} -> {2}", LogLevel.Debug, this.ID, inputValue.ToSmartStringOrNull(), returnValues.Where(t => t != null).Select(u => u.ToSmartStringOrNull()).ToCommaSeparatedString());
 
             return returnValues;
         }
@@ -237,11 +237,11 @@ namespace Lithnet.Transforms
                 }
             }
 
-            Logger.WriteLine("Transform {0}: {1} -> {2}",
-                    LogLevel.Debug,
-                    this.ID,
-                    inputValues.Select(t => t.ToSmartStringOrNull()).ToCommaSeparatedString(),
-                    returnValues.Where(t => t != null).Select(u => u.ToSmartStringOrNull()).ToCommaSeparatedString());
+            //Logger.WriteLine("Transform {0}: {1} -> {2}",
+            //        LogLevel.Debug,
+            //        this.ID,
+            //        inputValues.Select(t => t.ToSmartStringOrNull()).ToCommaSeparatedString(),
+            //        returnValues.Where(t => t != null).Select(u => u.ToSmartStringOrNull()).ToCommaSeparatedString());
 
             return returnValues;
         }
@@ -262,7 +262,7 @@ namespace Lithnet.Transforms
             ExtendedAttributeType inputType = TypeConverter.GetDataTypeExtended(inputValues.First());
             this.ValidateInputType(inputType);
             IList<object> returnValue = this.TransformMultiValuesWithLoopback(inputValues, targetValues);
-            Logger.WriteLine("Transform {0}: {1} -> {2}", LogLevel.Debug, this.ID, inputValues.Select(t => t.ToSmartStringOrNull()).ToCommaSeparatedString(), returnValue.Select(t => t.ToSmartStringOrNull()).ToCommaSeparatedString());
+            //Logger.WriteLine("Transform {0}: {1} -> {2}", LogLevel.Debug, this.ID, inputValues.Select(t => t.ToSmartStringOrNull()).ToCommaSeparatedString(), returnValue.Select(t => t.ToSmartStringOrNull()).ToCommaSeparatedString());
             return returnValue;
         }
 

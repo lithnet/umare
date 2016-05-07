@@ -95,6 +95,28 @@ namespace Lithnet.Transforms.UnitTests
 
 
         [TestMethod()]
+        public void PerformanceTest()
+        {
+            SidToDomainTransform transform = new SidToDomainTransform();
+            transform.Format = DomainFormat.DomainName;
+            SecurityIdentifier sid = WindowsIdentity.GetCurrent().User;
+            SecurityIdentifier domainSid = sid.AccountDomainSid;
+
+            byte[] sidBytes = new byte[sid.BinaryLength];
+            sid.GetBinaryForm(sidBytes, 0);
+
+            byte[] domainSidBytes = new byte[domainSid.BinaryLength];
+            domainSid.GetBinaryForm(domainSidBytes, 0);
+
+            string domainSidString = Utils.ConvertSidToString(domainSidBytes);
+
+            UnitTestControl.PerformanceTest(() =>
+            {
+                Assert.AreEqual(Environment.UserDomainName, transform.TransformValue(sidBytes).First());
+            }, 8000);
+        }
+
+        [TestMethod()]
         public void SidStringToDomainSidBytes()
         {
             SidToDomainTransform transform = new SidToDomainTransform();
@@ -157,8 +179,9 @@ namespace Lithnet.Transforms.UnitTests
         {
             SidToDomainTransform transform = new SidToDomainTransform();
             transform.Format = DomainFormat.DomainName;
+            byte[] empty = null;
 
-            this.ExecuteTest(transform, "S-1-5-21-606000587-1099826126-3276809063-1118", "S-1-5-21-606000587-1099826126-3276809063");
+            this.ExecuteTest(transform, "S-1-5-21-606000587-1099826126-3276809063-1118", empty);
         }
 
         [TestMethod()]

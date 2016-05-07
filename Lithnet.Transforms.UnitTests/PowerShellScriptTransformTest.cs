@@ -41,6 +41,18 @@ namespace Lithnet.Transforms.UnitTests
 
 
         [TestMethod()]
+        public void PerformanceTest()
+        {
+            PowerShellScriptTransform transform = new PowerShellScriptTransform();
+            transform.ScriptPath = @"..\..\TestData\Transform-String.ps1";
+
+            UnitTestControl.PerformanceTest(() =>
+            {
+                Assert.AreEqual("THINGS & STUFF", transform.TransformValue("Things & stuff").First());
+            }, 100000, 30000);
+        }
+
+        [TestMethod()]
         public void TestStringMV()
         {
             PowerShellScriptTransform transform = new PowerShellScriptTransform();

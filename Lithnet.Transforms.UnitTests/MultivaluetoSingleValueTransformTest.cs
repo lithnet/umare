@@ -67,6 +67,20 @@ namespace Lithnet.Transforms.UnitTests
         }
 
         [TestMethod()]
+        public void PerformanceTest()
+        {
+            MultivalueToSingleValueTransform transform = new MultivalueToSingleValueTransform();
+            transform.SelectorOperator = ValueOperator.Equals;
+            transform.SelectorValue = "Ryan";
+            transform.CompareAs = ExtendedAttributeType.String;
+
+            UnitTestControl.PerformanceTest(() =>
+            {
+                Assert.AreEqual("Ryan", transform.TransformValue(new List<object>() { "Bob", "Ryan" }).First());
+            }, 200000);
+        }
+
+        [TestMethod()]
         public void MVToSVNotEqualsTest()
         {
             MultivalueToSingleValueTransform transform = new MultivalueToSingleValueTransform();

@@ -59,6 +59,18 @@ namespace Lithnet.Transforms.UnitTests
 
             this.ExecuteTest(transform, "Test", "Value is: Test");
         }
+        
+        [TestMethod()]
+        public void PerformanceTest()
+        {
+            FormatStringTransform transform = new FormatStringTransform();
+            transform.Format = "Value is: {0}";
+
+            UnitTestControl.PerformanceTest(() =>
+            {
+                Assert.AreEqual("Value is: Test", transform.TransformValue("Test").First());
+            }, 800000);
+        }
 
         [TestMethod()]
         public void FormatStringTransformTestMultivalue()

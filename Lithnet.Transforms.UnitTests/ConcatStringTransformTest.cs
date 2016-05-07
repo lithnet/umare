@@ -70,6 +70,18 @@ namespace Lithnet.Transforms.UnitTests
         }
 
         [TestMethod()]
+        public void PerformanceTest()
+        {
+            ConcatStringTransform transform = new ConcatStringTransform();
+            transform.Delimiter = ",";
+
+            UnitTestControl.PerformanceTest(() =>
+            {
+                Assert.AreEqual("test1,test2,test3", transform.TransformValue(new List<object>() { "test1", "test2", "test3" }).First());
+            }, 200000);
+        }
+
+        [TestMethod()]
         public void ConcatStringTransformTestMultivalueInteger()
         {
             ConcatStringTransform transform = new ConcatStringTransform();

@@ -45,6 +45,23 @@ namespace Lithnet.Transforms.UnitTests
             this.ExecuteTest(transform, sid.Value, sidbytes);
         }
 
+
+        [TestMethod()]
+        public void PerformanceTest()
+        {
+            SidStringBiDirectionalTransform transform = new SidStringBiDirectionalTransform();
+            SecurityIdentifier sid = WindowsIdentity.GetCurrent().User;
+
+            byte[] sidbytes = new byte[sid.BinaryLength];
+            sid.GetBinaryForm(sidbytes, 0);
+
+            UnitTestControl.PerformanceTest(() =>
+            {
+                Assert.AreEqual(sid.Value,
+                    transform.TransformValue(sidbytes).First());
+            }, 170000);
+        }
+
         [TestMethod()]
         public void SidStringBiDirectionalTransformTestBase64StringInput()
         {
@@ -66,7 +83,7 @@ namespace Lithnet.Transforms.UnitTests
 
             byte[] sidbytes = new byte[sid.BinaryLength];
             sid.GetBinaryForm(sidbytes, 0);
-             
+
             this.ExecuteTest(transform, sidbytes, sid.Value);
         }
 
