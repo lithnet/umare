@@ -19,10 +19,13 @@ namespace Lithnet.Umare
     {
         public XmlConfigFile config;
 
+        private Dictionary<string, FlowRuleParameters> flowRuleParamCache;
+
         public MAExtensionObject()
         {
             TransformGlobal.HostProcessSupportsLoopbackTransforms = true;
             this.config = new XmlConfigFile();
+            this.flowRuleParamCache = new Dictionary<string, FlowRuleParameters>();
         }
 
         void IMASynchronization.Initialize()
@@ -65,9 +68,9 @@ namespace Lithnet.Umare
             throw new EntryPointNotImplementedException();
         }
 
-        void IMASynchronization.MapAttributesForJoin(string FlowRuleName, CSEntry csentry, ref ValueCollection values)
+        void IMASynchronization.MapAttributesForJoin(string flowRuleName, CSEntry csentry, ref ValueCollection values)
         {
-            FlowRuleParameters parameters = new FlowRuleParameters(this.config, FlowRuleName, FlowRuleType.Join);
+            FlowRuleParameters parameters = this.GetParameters(flowRuleName, FlowRuleType.Join);
 
             if (!parameters.ShouldFlow(csentry, null))
             {
@@ -107,9 +110,9 @@ namespace Lithnet.Umare
             throw new EntryPointNotImplementedException();
         }
 
-        void IMASynchronization.MapAttributesForImport(string FlowRuleName, CSEntry csentry, MVEntry mventry)
+        void IMASynchronization.MapAttributesForImport(string flowRuleName, CSEntry csentry, MVEntry mventry)
         {
-            FlowRuleParameters parameters = new FlowRuleParameters(this.config, FlowRuleName, FlowRuleType.Import);
+            FlowRuleParameters parameters = this.GetParameters(flowRuleName, FlowRuleType.Import);
 
             if (!parameters.ShouldFlow(csentry, mventry))
             {
@@ -142,9 +145,9 @@ namespace Lithnet.Umare
             this.SetDestinationAttributeValueForImport(parameters, mventry, returnValues, parameters.MergeValues);
         }
 
-        void IMASynchronization.MapAttributesForExport(string FlowRuleName, MVEntry mventry, CSEntry csentry)
+        void IMASynchronization.MapAttributesForExport(string flowRuleName, MVEntry mventry, CSEntry csentry)
         {
-            FlowRuleParameters parameters = new FlowRuleParameters(this.config, FlowRuleName, FlowRuleType.Export);
+            FlowRuleParameters parameters = this.GetParameters(flowRuleName, FlowRuleType.Export);
 
             if (!parameters.ShouldFlow(csentry, mventry))
             {
@@ -166,6 +169,16 @@ namespace Lithnet.Umare
             }
 
             this.SetDestinationAttributeValueForExport(parameters, csentry, returnValues);
+        }
+
+        private FlowRuleParameters GetParameters(string flowRuleName, FlowRuleType type)
+        {
+            if (!this.flowRuleParamCache.ContainsKey(flowRuleName))
+            {
+                this.flowRuleParamCache.Add(flowRuleName, new FlowRuleParameters(this.config, flowRuleName, type));
+            }
+
+            return this.flowRuleParamCache[flowRuleName];
         }
 
         private IList<object> GetSourceValuesForImport(FlowRuleParameters parameters, CSEntry csentry, out AttributeType attributeType)
@@ -262,7 +275,7 @@ namespace Lithnet.Umare
             List<object> values = new List<object>();
 
             Attrib attribute = mventry[parameters.TargetAttributeName];
-            
+
             if (attribute.IsPresent)
             {
                 if (attribute.IsMultivalued)

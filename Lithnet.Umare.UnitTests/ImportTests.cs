@@ -92,17 +92,10 @@ namespace Lithnet.Umare.UnitTests
                 }
             }
 
-            List<string> transformNames = new List<string>();
-            foreach (Transform transform in transforms)
-            {
-                transformNames.Add(transform.ID);
-            }
+            List<string> transformNames = transforms.Select(transform => transform.ID).ToList();
 
-            string flowRuleName = string.Format(
-                "{0}>>{1}>>{2}",
-                attributeNames.ToSeparatedString("+"),
-                transformNames.ToSeparatedString(">>"),
-                mvattributeName);
+            string flowRuleName =
+                $"{attributeNames.ToSeparatedString("+")}>>{transformNames.ToSeparatedString(">>")}>>{mvattributeName}";
 
 
             UnitTestControl.PerformanceTest(() =>
@@ -110,15 +103,18 @@ namespace Lithnet.Umare.UnitTests
                 this.rulesExtension.MapAttributesForImport(flowRuleName, csentry, mventry);
                 Assert.AreEqual("Test User", mventry["mvattribute"].StringValue);
 
-            }, 200000);
+            }, 120000);
         }
 
         [TestMethod]
         public void TestLoopbackImportTransform()
         {
-            MVBooleanToBitmaskTransform tx = new MVBooleanToBitmaskTransform();
-            tx.ID = "BBT345341";
-            tx.DefaultValue = 768;
+            MVBooleanToBitmaskTransform tx = new MVBooleanToBitmaskTransform
+            {
+                ID = "BBT345341",
+                DefaultValue = 768
+            };
+
             tx.Flags.Add(new FlagValue() { Name = "Test", Value = 2 });
 
             this.re.config.Transforms.Add(tx);
@@ -136,9 +132,12 @@ namespace Lithnet.Umare.UnitTests
         [TestMethod]
         public void TestLoopbackImportTransformWithNullTargetValue()
         {
-            MVBooleanToBitmaskTransform tx = new MVBooleanToBitmaskTransform();
-            tx.ID = "BBT";
-            tx.DefaultValue = 768;
+            MVBooleanToBitmaskTransform tx = new MVBooleanToBitmaskTransform
+            {
+                ID = "BBT",
+                DefaultValue = 768
+            };
+
             tx.Flags.Add(new FlagValue() { Name = "Test", Value = 2 });
 
             this.re.config.Transforms.Add(tx);
@@ -187,7 +186,7 @@ namespace Lithnet.Umare.UnitTests
 
             this.re.config.Transforms.Add(tx);
 
-            ExecuteImportTest(
+            this.ExecuteImportTest(
                 AttributeType.Integer,
                 AttributeType.Integer,
                 new List<Transform>() { tx },
