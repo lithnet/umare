@@ -37,16 +37,18 @@ namespace Lithnet.Umare
         {
             if (configFile == null)
             {
-                throw new ArgumentNullException("configFile");
+                throw new ArgumentNullException(nameof(configFile));
             }
 
             using (FileStream stream = new FileStream(filename, FileMode.Create, FileAccess.ReadWrite))
             {
-                XmlWriterSettings writerSettings = new XmlWriterSettings();
-                writerSettings.Indent = true;
-                writerSettings.IndentChars = "  ";
-                writerSettings.NewLineChars = Environment.NewLine;
-                writerSettings.NamespaceHandling = NamespaceHandling.OmitDuplicates;
+                XmlWriterSettings writerSettings = new XmlWriterSettings
+                {
+                    Indent = true,
+                    IndentChars = "  ",
+                    NewLineChars = Environment.NewLine,
+                    NamespaceHandling = NamespaceHandling.OmitDuplicates
+                };
 
                 using (XmlWriter writer = XmlWriter.Create(stream, writerSettings))
                 {

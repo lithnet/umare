@@ -14,7 +14,7 @@
     [System.ComponentModel.Description("SID to domain")]
     public class SidToDomainTransform : Transform
     {
-        Dictionary<SecurityIdentifier, string> resolvedNames = new Dictionary<SecurityIdentifier, string>();
+        private static Dictionary<SecurityIdentifier, string> resolvedNames = new Dictionary<SecurityIdentifier, string>();
 
         /// <summary>
         /// Initializes a new instance of the SidToDomainTransform class
@@ -121,7 +121,7 @@
                     return domainSidBytes;
 
                 case DomainFormat.DomainName:
-                    if (!this.resolvedNames.ContainsKey(domainSid))
+                    if (!SidToDomainTransform.resolvedNames.ContainsKey(domainSid))
                     {
                         string name;
 
@@ -135,12 +135,12 @@
                             name = null;
                         }
 
-                        this.resolvedNames.Add(domainSid, name);
+                        SidToDomainTransform.resolvedNames.Add(domainSid, name);
                         return name;
                     }
                     else
                     {
-                        return this.resolvedNames[domainSid];
+                        return SidToDomainTransform.resolvedNames[domainSid];
                     }
                 default:
                     throw new NotSupportedException();
