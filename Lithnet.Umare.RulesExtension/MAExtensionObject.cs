@@ -188,24 +188,31 @@ namespace Lithnet.Umare
 
             foreach (string attributeName in parameters.SourceAttributeNames)
             {
-                Attrib attribute = csentry[attributeName];
-
-                if (attributeType == AttributeType.Undefined)
+                if (attributeName == "DN")
                 {
-                    attributeType = attribute.DataType;
-                }
-                else if (attributeType != attribute.DataType)
-                {
-                    attributeType = AttributeType.String;
-                }
-
-                if (attribute.IsMultivalued)
-                {
-                    values.AddRange(this.GetMVAttributeValue(attribute));
+                    values.Add(csentry.DN.ToString());
                 }
                 else
                 {
-                    values.Add(this.GetSVAttributeValue(attribute));
+                    Attrib attribute = csentry[attributeName];
+
+                    if (attributeType == AttributeType.Undefined)
+                    {
+                        attributeType = attribute.DataType;
+                    }
+                    else if (attributeType != attribute.DataType)
+                    {
+                        attributeType = AttributeType.String;
+                    }
+
+                    if (attribute.IsMultivalued)
+                    {
+                        values.AddRange(this.GetMVAttributeValue(attribute));
+                    }
+                    else
+                    {
+                        values.Add(this.GetSVAttributeValue(attribute));
+                    }
                 }
             }
 
@@ -255,15 +262,23 @@ namespace Lithnet.Umare
 
             foreach (string attributeName in parameters.SourceAttributeNames)
             {
-                Attrib attribute = mventry[attributeName];
-
-                if (attribute.IsMultivalued)
+                if (attributeName == "MVObjectID")
                 {
-                    values.AddRange(this.GetMVAttributeValue(attribute));
+                    values.Add(mventry.ObjectID.ToString());
                 }
                 else
                 {
-                    values.Add(this.GetSVAttributeValue(attribute));
+
+                    Attrib attribute = mventry[attributeName];
+
+                    if (attribute.IsMultivalued)
+                    {
+                        values.AddRange(this.GetMVAttributeValue(attribute));
+                    }
+                    else
+                    {
+                        values.Add(this.GetSVAttributeValue(attribute));
+                    }
                 }
             }
 

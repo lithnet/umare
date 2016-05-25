@@ -188,9 +188,9 @@ namespace Lithnet.Umare
                 throw new ArgumentException("The flow rule name was not in a supported format");
             }
 
-            IEnumerable<string> attributes = Regex.Split(attributeNames, @"\+").Reverse();
+            string[] attributes = Regex.Split(attributeNames, @"\+").Reverse().ToArray();
 
-            if (attributes.Count() == 0)
+            if (attributes == null || attributes.Length == 0)
             {
                 throw new InvalidFlowRuleNameException();
             }
@@ -202,17 +202,22 @@ namespace Lithnet.Umare
 
         private void GetTargetAttribute()
         {
-            if (this.FlowRuleType == FlowRuleType.Import)
+            switch (this.FlowRuleType)
             {
-                this.GetTargetAttributeForImport();
-            }
-            else if (this.FlowRuleType == FlowRuleType.Export)
-            {
-                this.GetTargetAttributeForExport();
-            }
-            else if (this.FlowRuleType == Umare.FlowRuleType.Join)
-            {
-                this.TargetAttributeName = null;
+                case FlowRuleType.Import:
+                    this.GetTargetAttributeForImport();
+                    break;
+
+                case FlowRuleType.Export:
+                    this.GetTargetAttributeForExport();
+                    break;
+
+                case FlowRuleType.Join:
+                    this.TargetAttributeName = null;
+                    break;
+
+                default:
+                    throw new InvalidOperationException();
             }
         }
 
@@ -245,17 +250,22 @@ namespace Lithnet.Umare
 
         private void GetTransforms()
         {
-            if (this.FlowRuleType == FlowRuleType.Import)
+            switch (this.FlowRuleType)
             {
-                this.GetTransformsForImport();
-            }
-            else if (this.FlowRuleType == FlowRuleType.Export)
-            {
-                this.GetTransformsForExport();
-            }
-            else if (this.FlowRuleType == Umare.FlowRuleType.Join)
-            {
-                this.GetTransformsForJoin();
+                case FlowRuleType.Import:
+                    this.GetTransformsForImport();
+                    break;
+
+                case FlowRuleType.Export:
+                    this.GetTransformsForExport();
+                    break;
+
+                case FlowRuleType.Join:
+                    this.GetTransformsForJoin();
+                    break;
+
+                default:
+                    throw new InvalidOperationException();
             }
 
             this.ValidateLoopbackTransformPosition();
