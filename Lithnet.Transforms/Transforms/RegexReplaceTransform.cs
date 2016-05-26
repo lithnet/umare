@@ -97,6 +97,7 @@
                     else
                     {
                         this.RemoveError("FindPattern");
+                        this.regex = null;
                     }
 
                     break;
