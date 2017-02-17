@@ -2,4 +2,5 @@
 <Weavers>
   <PropertyChanged/>
   <!--<Costura CreateTemporaryAssemblies="true" />-->
+  <Costura/>
 </Weavers>

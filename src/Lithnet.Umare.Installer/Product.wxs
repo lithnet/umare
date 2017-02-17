@@ -4,7 +4,7 @@
   <Product Id="*"
            Name="Lithnet Universal MA Rules Extension"
            Language="1033"
-           Version="1.5.6123"
+           Version="!(bind.FileVersion.fil6D943C5C32D9B17A97454C926206E70B)"
            Manufacturer="Lithnet"
            UpgradeCode="187DA848-34F5-4CA6-8AD5-C35D820ABC58">
     <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
