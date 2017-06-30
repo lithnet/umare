@@ -127,7 +127,11 @@ namespace Lithnet.Umare.Presentation
             {
                 yield return this.TransformCollectionViewModel;
                 yield return this.FlowRulesAliasCollectionViewModel;
-                yield return this.MAOperationsViewModel;
+
+                if (System.Diagnostics.Debugger.IsAttached)
+                {
+                    yield return this.MAOperationsViewModel;
+                }
             }
         }
 

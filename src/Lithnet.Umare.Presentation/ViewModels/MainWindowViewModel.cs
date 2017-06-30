@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Reflection;
 using System.Windows;
 using Lithnet.Common.ObjectModel;
 using Lithnet.Common.Presentation;
-//using Lithnet.Logging;
 using Microsoft.Win32;
 using System.Windows.Input;
 using System.Windows.Controls;
-using Lithnet.Transforms.Presentation;
-using System.Text;
 
 namespace Lithnet.Umare.Presentation
 {
@@ -22,7 +18,6 @@ namespace Lithnet.Umare.Presentation
         private bool confirmedCloseOnDirtyViewModel;
 
         public MainWindowViewModel()
-            : base()
         {
             UINotifyPropertyChanges.BeginIgnoreAllChanges();
             ViewModelBase.GlobalIconProvider = new IconProvider();
