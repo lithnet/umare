@@ -66,11 +66,11 @@
       <HintPath>..\packages\Lithnet.MetadirectoryServices.Resolver.1.0.6006.11723\lib\net40\Lithnet.MetadirectoryServices.Resolver.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Lithnet.Transforms, Version=1.5.6591.24052, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Lithnet.Transforms.1.5.6591.24052\lib\net45\Lithnet.Transforms.dll</HintPath>
+    <Reference Include="Lithnet.Transforms, Version=1.5.6676.35978, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lithnet.Transforms.1.5.6676.35978\lib\net45\Lithnet.Transforms.dll</HintPath>
     </Reference>
-    <Reference Include="Lithnet.Transforms.Presentation, Version=1.5.6488.12016, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Lithnet.Transforms.Presentation.1.5.6488.12016\lib\net45\Lithnet.Transforms.Presentation.dll</HintPath>
+    <Reference Include="Lithnet.Transforms.Presentation, Version=1.5.6676.35984, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lithnet.Transforms.Presentation.1.5.6676.35984\lib\net45\Lithnet.Transforms.Presentation.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
