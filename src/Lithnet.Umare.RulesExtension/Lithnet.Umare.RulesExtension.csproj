@@ -8,8 +8,8 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Lithnet.Umare.RulesExtension</RootNamespace>
-    <AssemblyName>Lithnet.Umare.RulesExtension.Original</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <AssemblyName>Lithnet.Umare.RulesExtension</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -45,6 +45,7 @@
     </Reference>
     <Reference Include="Lithnet.Common.ObjectModel, Version=1.0.6258.25160, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Lithnet.Common.ObjectModel.1.0.6258.25160\lib\net40\Lithnet.Common.ObjectModel.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Lithnet.MetadirectoryServices, Version=1.0.6478.33562, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Lithnet.MetadirectoryServices.1.0.6478.33562\lib\net40\Lithnet.MetadirectoryServices.dll</HintPath>
@@ -68,9 +69,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MAExtensionObject.cs" />
@@ -93,7 +92,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>$(SolutionDir)\packages\ILMerge.2.14.1208\tools\ILMerge.exe /wildcards /targetplatform:"v4,C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0" /out:$(TargetDir)Lithnet.Umare.RulesExtension.dll /lib:"..\..\..\lib" $(TargetDir)Lithnet.Umare.RulesExtension.Original.dll $(TargetDir)Lithnet.Common.ObjectModel.dll $(TargetDir)Lithnet.MetadirectoryServices.dll $(TargetDir)Lithnet.Transforms.dll $(TargetDir)Lithnet.Umare.dll
+    <PostBuildEvent>REM $(SolutionDir)\packages\ILMerge.2.14.1208\tools\ILMerge.exe /wildcards /targetplatform:"v4,C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0" /out:$(TargetDir)Lithnet.Umare.RulesExtension.dll /lib:"..\..\..\lib" "$(SolutionDir)\Lithnet.Umare\bin\$(ConfigurationName)\*.dll"
 "C:\Program Files (x86)\Microsoft SDKs\ClickOnce\SignTool\signtool.exe" sign /sha1 "$(CSCERTTHUMBPRINT)" /t http://timestamp.digicert.com /fd sha256 /v "$(TargetFileName)"
 </PostBuildEvent>
   </PropertyGroup>
