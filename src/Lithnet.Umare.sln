@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34601.278
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lithnet.Umare", "Lithnet.Umare\Lithnet.Umare.csproj", "{83D5A7EF-4D0D-4445-A85D-61F34FE66CBA}"
 EndProject
@@ -14,6 +14,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lithnet.Umare.UnitTests", "Lithnet.Umare.UnitTests\Lithnet.Umare.UnitTests.csproj", "{142E87AC-FCBA-488A-83C0-34A599D2BA6D}"
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Lithnet.Umare.Installer", "Lithnet.Umare.Installer\Lithnet.Umare.Installer.wixproj", "{254FDCCA-0C65-4A48-BF2C-2CDBF6A07C61}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{33D47195-C138-4F23-BDF7-A92E9DC0BD8F}"
+	ProjectSection(SolutionItems) = preProject
+		..\build\azure-pipelines.yml = ..\build\azure-pipelines.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -86,5 +91,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {954EC688-E06C-4FBE-AF42-80F059A8BE6A}
 	EndGlobalSection
 EndGlobal
