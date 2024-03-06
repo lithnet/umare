@@ -10,7 +10,7 @@
   </PropertyGroup>
   
   <ItemGroup>
-	  <PackageReference Include="Lithnet.Transforms" Version="1.6.6" />
+	  <PackageReference Include="Lithnet.Transforms" Version="1.6.7" />
 	  <PackageReference Include="PropertyChanged.Fody" Version="4.1.0">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
