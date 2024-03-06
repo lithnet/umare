@@ -1,168 +1,27 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <ProjectType>Local</ProjectType>
-    <ProductVersion>8.0.50727</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{83D5A7EF-4D0D-4445-A85D-61F34FE66CBA}</ProjectGuid>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ApplicationIcon />
-    <AssemblyKeyContainerName />
-    <AssemblyName>Lithnet.Umare</AssemblyName>
-    <AssemblyOriginatorKeyFile />
-    <AssemblyOriginatorKeyMode>None</AssemblyOriginatorKeyMode>
-    <DefaultClientScript>JScript</DefaultClientScript>
-    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
-    <DefaultTargetSchema>IE50</DefaultTargetSchema>
-    <DelaySign>false</DelaySign>
-    <OutputType>Library</OutputType>
-    <OptionCompare>Binary</OptionCompare>
-    <OptionExplicit>On</OptionExplicit>
-    <OptionStrict>Off</OptionStrict>
-    <RootNamespace>Lithnet.Umare</RootNamespace>
-    <StartupObject />
-    <FileUpgradeFlags />
-    <MyType>Windows</MyType>
-    <UpgradeBackupLocation />
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
-    <TargetFrameworkProfile />
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
+    <TargetFramework>net462</TargetFramework>
+    <AssemblyTitle>Lithnet.Umare</AssemblyTitle>
+    <Company>Lithnet</Company>
+    <Product>Lithnet Universal MA Rules Extension</Product>
+    <Description>Universal MA Rules extension core library for Microsoft Identity Management products</Description>
+    <Deterministic>true</Deterministic>
+    <Version>1.6.0</Version>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <OutputPath>bin\debug\</OutputPath>
-    <DocumentationFile />
-    <BaseAddress>285212672</BaseAddress>
-    <ConfigurationOverrideFile />
-    <DefineConstants />
-    <DefineDebug>true</DefineDebug>
-    <DefineTrace>true</DefineTrace>
-    <DebugSymbols>true</DebugSymbols>
-    <Optimize>false</Optimize>
-    <RegisterForComInterop>false</RegisterForComInterop>
-    <RemoveIntegerChecks>false</RemoveIntegerChecks>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <WarningLevel>4</WarningLevel>
-    <NoWarn />
-    <DebugType>full</DebugType>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputPath>C:\Program Files\Microsoft Forefront Identity Manager\2010\Synchronization Service\Extensions</OutputPath>
-    <DocumentationFile />
-    <BaseAddress>285212672</BaseAddress>
-    <ConfigurationOverrideFile />
-    <DefineConstants />
-    <DefineDebug>false</DefineDebug>
-    <DefineTrace>true</DefineTrace>
-    <DebugSymbols>false</DebugSymbols>
-    <Optimize>false</Optimize>
-    <RegisterForComInterop>false</RegisterForComInterop>
-    <RemoveIntegerChecks>false</RemoveIntegerChecks>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <WarningLevel>4</WarningLevel>
-    <NoWarn />
-    <DebugType>none</DebugType>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
+  
   <ItemGroup>
-    <Reference Include="Lithnet.Common.ObjectModel, Version=1.0.6258.25160, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Lithnet.Common.ObjectModel.1.0.6258.25160\lib\net40\Lithnet.Common.ObjectModel.dll</HintPath>
-    </Reference>
-    <Reference Include="Lithnet.MetadirectoryServices, Version=1.0.6478.33562, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Lithnet.MetadirectoryServices.1.0.6478.33562\lib\net40\Lithnet.MetadirectoryServices.dll</HintPath>
-    </Reference>
-    <Reference Include="Lithnet.Transforms, Version=1.5.7419.27409, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Lithnet.Transforms.1.5.7419.27409\lib\net45\Lithnet.Transforms.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.MetadirectoryServicesEx">
-      <HintPath>..\lib\Microsoft.MetadirectoryServicesEx.dll</HintPath>
-    </Reference>
-    <Reference Include="PropertyChanged, Version=2.1.4.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
-      <HintPath>..\packages\PropertyChanged.Fody.2.1.4\lib\netstandard1.0\PropertyChanged.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System">
-      <Name>System</Name>
-    </Reference>
-    <Reference Include="System.Management.Automation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Management.Automation.6.1.7601.17515\lib\net45\System.Management.Automation.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Xml">
-      <Name>System.XML</Name>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Actions\Action.cs" />
-    <Compile Include="Actions\DeclineMappingAction.cs" />
-    <Compile Include="Actions\JoinMappingAction.cs" />
-    <Compile Include="Actions\MappingAction.cs" />
-    <Compile Include="Actions\ExtensionPassThroughAction.cs" />
-    <Compile Include="Actions\ExportMappingAction.cs" />
-    <Compile Include="Actions\ImportMappingAction.cs" />
-    <Compile Include="Interfaces\IDisconnectAction.cs" />
-    <Compile Include="Interfaces\IResolveJoinAction.cs" />
-    <Compile Include="Interfaces\IJoinMappingAction.cs" />
-    <Compile Include="Interfaces\IExportMappingAction.cs" />
-    <Compile Include="Interfaces\IDeprovisionAction.cs" />
-    <Compile Include="Interfaces\IProjectAction.cs" />
-    <Compile Include="Interfaces\IImportMappingAction.cs" />
-    <Compile Include="AssemblyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ConfigManager.cs" />
-    <Compile Include="Enums\ComparisonTarget.cs" />
-    <Compile Include="Enums\GroupOperator.cs" />
-    <Compile Include="Actions\ActionGroup.cs" />
-    <Compile Include="MAOperations\ActionGroupCollection.cs" />
-    <Compile Include="MAOperations\MAOperations.cs" />
-    <Compile Include="MAOperations\MAOperation.cs" />
-    <Compile Include="Rules\AttributePresenceRule.cs" />
-    <Compile Include="Rules\ConnectorCountRule.cs" />
-    <Compile Include="Rules\ValueComparisonRule.cs" />
-    <Compile Include="Rules\MVEntryAttributePresenceRule.cs" />
-    <Compile Include="Rules\CSEntryAttributePresenceRule.cs" />
-    <Compile Include="Enums\FlowRuleType.cs" />
-    <Compile Include="Enums\Direction.cs" />
-    <Compile Include="FlowRuleAlias.cs" />
-    <Compile Include="FlowRuleParameters.cs" />
-    <Compile Include="InvalidFlowRuleNameException.cs" />
-    <Compile Include="FlowRuleAliasKeyedCollection.cs" />
-    <Compile Include="Rules\Rule.cs" />
-    <Compile Include="Rules\RuleGroup.cs" />
-    <Compile Include="XmlConfigFile.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Properties\" />
+	  <PackageReference Include="Lithnet.Transforms" Version="1.6.6" />
+	  <PackageReference Include="PropertyChanged.Fody" Version="4.1.0">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="System.Management.Automation" Version="6.1.7601.17515" />
   </ItemGroup>
   <ItemGroup>
     <None Include="FodyWeavers.xml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
+    <Reference Include="Microsoft.MetadirectoryServicesEx">
+      <HintPath>lib\Microsoft.MetadirectoryServicesEx.dll</HintPath>
+    </Reference>
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PreBuildEvent />
-    <PostBuildEvent>"C:\Program Files (x86)\Microsoft SDKs\ClickOnce\SignTool\signtool.exe" sign /sha1 "$(CSCERTTHUMBPRINT)" /t http://timestamp.digicert.com /fd sha256 /v "$(TargetFileName)"
-</PostBuildEvent>
-  </PropertyGroup>
-  <Import Project="..\packages\Fody.2.1.2\build\netstandard1.0\Fody.targets" Condition="Exists('..\packages\Fody.2.1.2\build\netstandard1.0\Fody.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Fody.2.1.2\build\netstandard1.0\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.2.1.2\build\netstandard1.0\Fody.targets'))" />
-  </Target>
 </Project>
