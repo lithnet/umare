@@ -3,21 +3,22 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34601.278
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lithnet.Umare", "Lithnet.Umare\Lithnet.Umare.csproj", "{83D5A7EF-4D0D-4445-A85D-61F34FE66CBA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lithnet.Umare", "Lithnet.Umare\Lithnet.Umare.csproj", "{83D5A7EF-4D0D-4445-A85D-61F34FE66CBA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lithnet.Umare.Presentation", "Lithnet.Umare.Presentation\Lithnet.Umare.Presentation.csproj", "{E4FB5273-CDE9-4B15-B137-EEBA9AE2F2F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lithnet.Umare.Presentation", "Lithnet.Umare.Presentation\Lithnet.Umare.Presentation.csproj", "{E4FB5273-CDE9-4B15-B137-EEBA9AE2F2F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lithnet.Umare.RulesExtension", "Lithnet.Umare.RulesExtension\Lithnet.Umare.RulesExtension.csproj", "{9278F96A-6E8C-4D7D-A82A-D0A9FFC1F58C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lithnet.Umare.RulesExtension", "Lithnet.Umare.RulesExtension\Lithnet.Umare.RulesExtension.csproj", "{9278F96A-6E8C-4D7D-A82A-D0A9FFC1F58C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lithnet.Umare.Editor", "Lithnet.Umare.Editor\Lithnet.Umare.Editor.csproj", "{C18A1E08-AE60-402C-9145-1D532B973EAC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lithnet.Umare.Editor", "Lithnet.Umare.Editor\Lithnet.Umare.Editor.csproj", "{C18A1E08-AE60-402C-9145-1D532B973EAC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lithnet.Umare.UnitTests", "Lithnet.Umare.UnitTests\Lithnet.Umare.UnitTests.csproj", "{142E87AC-FCBA-488A-83C0-34A599D2BA6D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lithnet.Umare.UnitTests", "Lithnet.Umare.UnitTests\Lithnet.Umare.UnitTests.csproj", "{142E87AC-FCBA-488A-83C0-34A599D2BA6D}"
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Lithnet.Umare.Installer", "Lithnet.Umare.Installer\Lithnet.Umare.Installer.wixproj", "{254FDCCA-0C65-4A48-BF2C-2CDBF6A07C61}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{33D47195-C138-4F23-BDF7-A92E9DC0BD8F}"
 	ProjectSection(SolutionItems) = preProject
 		..\build\azure-pipelines.yml = ..\build\azure-pipelines.yml
+		nuget.config = nuget.config
 	EndProjectSection
 EndProject
 Global
