@@ -6,7 +6,7 @@
 		<Product>Lithnet Universal MA Rules Extension</Product>
 		<Description>Universal MA Rules extension presentation library for Microsoft Identity Management products</Description>
 		<Deterministic>false</Deterministic>
-		<Version>1.6</Version>
+		<Version>2.0</Version>
 		<UseWPF>true</UseWPF>
 	</PropertyGroup>
 	<ItemGroup>
@@ -14,7 +14,7 @@
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
 		<PackageReference Include="System.Windows.Interactivity.WPF" Version="2.0.20525" />
-		<PackageReference Include="Lithnet.Transforms.Presentation" Version="1.6.7" />
+		<PackageReference Include="Lithnet.Transforms.Presentation" Version="2.0.3" />
 	</ItemGroup>
 	
 

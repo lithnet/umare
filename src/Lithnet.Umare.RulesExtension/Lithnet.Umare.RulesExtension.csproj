@@ -6,11 +6,9 @@
 		<Product>Lithnet Universal MA Rules Extension</Product>
 		<Description>Universal MA Rules extension for Microsoft Identity Management products</Description>
 		<Deterministic>false</Deterministic>
-		<Version>1.6.0</Version>
+		<Version>2.0</Version>
 	</PropertyGroup>
-	<!--<Target Name="CleanReferenceCopyLocalPaths" AfterTargets="AfterBuild;NonWinFodyTarget">
-		<CosturaCleanup Config="FodyWeavers.xml" Files="@(ReferenceCopyLocalPaths->'$(OutDir)%(DestinationSubDirectory)%(Filename)%(Extension)')" />
-	</Target>-->
+	
 	<ItemGroup>
 		<PackageReference Include="Costura.Fody" Version="5.7.0">
 			<PrivateAssets>all</PrivateAssets>

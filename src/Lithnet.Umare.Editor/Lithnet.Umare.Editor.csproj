@@ -7,13 +7,13 @@
 		<Product>Lithnet Universal MA Rules Extension</Product>
 		<Description>Universal MA rules extension editor for Microsoft Identity Management products</Description>
 		<Deterministic>true</Deterministic>
-		<Version>1.6.0</Version>
+		<Version>2.0</Version>
 		<UseWPF>true</UseWPF>
 		<ApplicationIcon>UMARE.ico</ApplicationIcon>
 	</PropertyGroup>
 	
 	<ItemGroup>
-		<PackageReference Include="Lithnet.MetadirectoryServices.Resolver" Version="1.0.6006.11723" />
+		<PackageReference Include="Lithnet.MetadirectoryServices.Resolver" Version="2.0.4" />
 		<PackageReference Include="PropertyChanged.Fody" Version="4.1.0">
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
