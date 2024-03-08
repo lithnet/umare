@@ -14,7 +14,7 @@
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
 		<PackageReference Include="System.Windows.Interactivity.WPF" Version="2.0.20525" />
-		<PackageReference Include="Lithnet.Transforms.Presentation" Version="2.0.4" />
+		<PackageReference Include="Lithnet.Transforms.Presentation" Version="2.0.5" />
 	</ItemGroup>
 	
 
